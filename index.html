@@ -287,7 +287,7 @@ body:has(.testpanel){padding-bottom:64px}
 .cat svg{width:100%;height:100%;display:block}
 .cat:hover{transform:translateY(-2px)}
 .cat:focus-visible{outline:4px solid var(--gold);outline-offset:3px;border-radius:8px}
-#toast.show{pointer-events:auto;cursor:pointer}
+#toast.show{pointer-events:auto}
 .special .trow{display:grid;grid-template-columns:1fr;gap:6px;margin:8px 0}
 
 /* v6 : chat, train, décor latéral */
@@ -582,6 +582,90 @@ body.wk3 .side.sideL{top:8%}
 .gatehead svg{width:22px;height:22px}
 body.locked .flyer,body.locked #toys{display:none}
 
+/* messages au centre, fermés par la croix */
+#toast{top:50%;bottom:auto!important;transform:translate(-50%,-50%) scale(.92);font-size:1.05rem;padding:18px 46px 18px 22px;max-width:min(90vw,460px);line-height:1.4;visibility:hidden;z-index:60}
+#toast.show{transform:translate(-50%,-50%) scale(1);visibility:visible}
+#toast .tclose{position:absolute;top:6px;right:8px;width:30px;height:30px;border:0;border-radius:50%;background:transparent;color:inherit;font-size:1.5rem;line-height:1;cursor:pointer;font-weight:900}
+#toast .tclose:hover,#toast .tclose:focus-visible{background:rgba(0,0,0,.08);outline:none}
+/* lune chatouilleuse */
+.moon{--mb:0;filter:drop-shadow(0 0 calc(var(--mb)*16px) rgba(255,120,170,calc(var(--mb)*.95))) saturate(calc(1 + var(--mb)*.6));transition:filter .3s}
+.moon.mwig{animation:mwig .45s ease}
+@keyframes mwig{25%{rotate:-10deg}60%{rotate:8deg}}
+/* uwu : toute la page rougit */
+body.uwu::after{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(255,143,177,.12),rgba(255,105,170,.28));pointer-events:none;z-index:35;animation:uwufade 1s ease}
+@keyframes uwufade{from{opacity:0}}
+body.uwu header h1,body.uwu header h1 em{color:#ffc2d9!important}
+body.uwu .tile{box-shadow:0 0 0 3px rgba(255,143,177,.6)}
+.uheart{position:fixed;bottom:-30px;z-index:36;color:#ff7fae;pointer-events:none;animation:uheart 6s linear forwards;text-shadow:0 0 6px rgba(255,255,255,.6)}
+@keyframes uheart{to{transform:translateY(-110vh) translateX(20px) rotate(20deg);opacity:.2}}
+/* badges cachés, bonus, 42 */
+.bdg.hid b,.bdg.hid span{letter-spacing:.06em}
+.bdg.bonus{position:relative;background:#e4e0d8}
+.bdg{position:relative}
+.bdg.r-rare.on{background:linear-gradient(110deg,#ffcf5c 0%,#ffcf5c 38%,#fff6cf 48%,#ffcf5c 58%,#ffcf5c 100%);background-size:250% 100%;animation:shine 2.6s linear infinite;box-shadow:0 0 12px rgba(255,207,92,.7)}
+@keyframes shine{from{background-position:120% 0}to{background-position:-120% 0}}
+.bdg.r-leg.on{background:linear-gradient(120deg,#c7a6ff,#8fd8ff 40%,#ffb3e6 70%,#c7a6ff);background-size:200% 200%;animation:holo 5s ease infinite;box-shadow:0 0 14px rgba(199,166,255,.8);color:#2b1b3d}
+.bdg.r-uni.on{overflow:hidden;background:radial-gradient(circle at 30% 30%,#3b2a7a,#120d32 70%);color:#fff6cf;box-shadow:0 0 16px rgba(120,160,255,.8)}
+.bdg.r-uni.on::before{content:"✦  ·  ✧    ·  ✦   ·    ✧  ·   ✦";position:absolute;inset:0;color:#cfe3ff;font-size:.7rem;letter-spacing:.3em;line-height:1.8;opacity:.7;animation:tw 2s ease-in-out infinite alternate;pointer-events:none;padding:2px}
+@keyframes tw{to{opacity:.25}}
+.bdg:not(.on).r-rare{background:#efe2bd;border-color:#a8801c}
+.bdg:not(.on).r-leg{background:linear-gradient(120deg,#e6dcfb,#d9f1fb 45%,#f8e0f1);border-color:#7a5cc4}
+.bdg:not(.on).r-uni{background:#2a2050;color:#b9b2d9}
+.bdg.bonus.on{background:#2a1f4d;color:#d9fbff;animation:glitch 2.2s steps(1) infinite}
+.bdg.bonus.on b{text-shadow:2px 0 #ff4fa3,-2px 0 #3de0ff}
+@keyframes glitch{0%,90%{transform:none}92%{transform:translate(2px,-1px)}94%{transform:translate(-2px,1px)}96%{transform:none}}
+@media (prefers-reduced-motion: reduce){.bdg.r-rare.on,.bdg.r-leg.on,.bdg.bonus.on,.bdg.r-uni.on::before{animation:none}}
+@keyframes holo{50%{background-position:100% 0}}
+.bdg .btag{position:absolute;top:4px;right:8px;z-index:1;font-style:normal;font-size:.62rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em;opacity:.7}
+.q42btn{display:block;margin:6px 0 12px}
+.q42box .q42in{width:100%;font:inherit;font-size:1.1rem;padding:10px 12px;border:3px solid var(--ink-d);border-radius:12px;margin:10px 0}
+.sball{width:calc(22px * var(--sz));height:calc(22px * var(--sz));transform:none;margin-left:calc(-11px * (var(--sz) - 1));transition:left .9s cubic-bezier(.3,.7,.4,1),width .9s cubic-bezier(.3,.7,.4,1),height .9s cubic-bezier(.3,.7,.4,1),margin .9s cubic-bezier(.3,.7,.4,1)}
+.sball svg *{vector-effect:non-scaling-stroke}
+.sball svg circle{stroke-width:3.5}
+.bdg:has(.btag){padding-top:20px}
+
+/* carte de badge agrandie */
+.bdg{cursor:pointer}
+.bdg.nope{animation:nope .4s ease}
+@keyframes nope{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+#cardview{position:fixed;inset:0;z-index:58;display:none;align-items:center;justify-content:center;background:rgba(14,9,36,.74);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);perspective:900px;touch-action:none;padding:16px}
+#cardview.open{display:flex}
+#cardview .cvclose{position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:3px solid var(--ink-d);background:var(--berry);color:#fff;font-size:1.6rem;font-weight:900;cursor:pointer;box-shadow:0 3px 0 var(--ink-d)}
+.bigcard{--rx:0deg;--ry:0deg;--gx:50%;--gy:50%;--px:0;--py:0;position:relative;overflow:hidden;width:min(78vw,300px);aspect-ratio:5/7;border:5px solid var(--ink-d);border-radius:22px;padding:30px 24px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;color:var(--ink-d);background:var(--gold);transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .08s linear;box-shadow:0 22px 60px rgba(0,0,0,.6),0 0 0 3px rgba(255,255,255,.15) inset;animation:cardin .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes cardin{from{transform:scale(.3) rotateY(-180deg);opacity:0}}
+.bigcard b{font-family:var(--font-display);font-weight:400;font-size:1.9rem;line-height:1.1;position:relative;z-index:2}
+.bigcard span{font-size:1.05rem;line-height:1.4;position:relative;z-index:2}
+.bigcard .ctag{position:absolute;top:12px;left:0;right:0;font-style:normal;font-weight:900;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75;z-index:2}
+.bigcard .cfoot{position:absolute;bottom:12px;left:0;right:0;font-style:normal;font-size:.68rem;opacity:.6;z-index:2}
+.bigcard .cglyph{font-size:3.4rem;line-height:1;font-weight:900;position:relative;z-index:2;transform:translate(calc(var(--px)*-6px),calc(var(--py)*-6px));text-shadow:0 3px 0 rgba(0,0,0,.15)}
+.bigcard .glare,.bigcard .cfx{position:absolute;inset:0;pointer-events:none;z-index:1}
+.bigcard .glare{background:radial-gradient(circle at var(--gx) var(--gy),rgba(255,255,255,.65),rgba(255,255,255,0) 48%);mix-blend-mode:soft-light;z-index:3}
+.bigcard.rc-rare{background:linear-gradient(135deg,#ffd970,#f2b632 55%,#ffe7a0)}
+.bigcard.rc-rare .cfx{background-image:radial-gradient(circle,#fff 0 1.4px,transparent 2px),radial-gradient(circle,#fff6cf 0 1px,transparent 1.6px);background-size:38px 38px,23px 23px;background-position:calc(var(--px)*14px) calc(var(--py)*14px),calc(var(--px)*-9px) calc(var(--py)*-9px);opacity:.75;mix-blend-mode:screen}
+.bigcard.rc-leg{background:linear-gradient(135deg,#d9c6ff,#a9e4ff 45%,#ffc6ec)}
+.bigcard.rc-leg .cfx{background:repeating-linear-gradient(115deg,#ff6f9f 0%,#ffd84d 6%,#5dffb0 12%,#4fc3ff 18%,#a77bff 24%,#ff6f9f 30%);background-size:260% 260%;background-position:var(--gx) var(--gy);mix-blend-mode:multiply;opacity:.5}
+.bigcard.rc-leg .glare{background:linear-gradient(115deg,transparent calc(var(--gx) - 18%),rgba(255,255,255,.85) var(--gx),transparent calc(var(--gx) + 18%));mix-blend-mode:screen}
+.bigcard.rc-uni{background:radial-gradient(circle at 30% 25%,#41308a,#120d32 72%);color:#fff6cf}
+.bigcard.rc-uni .cfx{background-image:radial-gradient(circle,#fff 0 1.2px,transparent 1.8px),radial-gradient(circle,#cfe3ff 0 .9px,transparent 1.4px),radial-gradient(circle,#ffe9a8 0 1.6px,transparent 2.2px);background-size:47px 53px,29px 31px,83px 71px;background-position:calc(var(--px)*-18px) calc(var(--py)*-18px),calc(var(--px)*-8px) calc(var(--py)*-8px),calc(var(--px)*-30px) calc(var(--py)*-30px);animation:tw 2.4s ease-in-out infinite alternate}
+.bigcard.rc-uni .cglyph{color:#ffe9a8;font-family:var(--font-display);text-shadow:0 0 18px rgba(255,233,168,.8)}
+.bigcard.rc-bonus{background:#2a1f4d;color:#d9fbff}
+.bigcard.rc-bonus b{text-shadow:3px 0 #ff4fa3,-3px 0 #3de0ff}
+.bigcard.rc-bonus .cfx{background:repeating-linear-gradient(0deg,rgba(61,224,255,.12) 0 2px,transparent 2px 6px);animation:scan 1.8s steps(6) infinite}
+.bigcard.rc-bonus b,.bigcard.rc-bonus .cglyph{animation:glitch 2.2s steps(1) infinite}
+@keyframes scan{to{background-position:0 36px}}
+@media (prefers-reduced-motion: reduce){.bigcard{animation:none!important}}
+
+#cardview .cvnew{position:absolute;top:calc(50% - min(78vw,300px)*0.7 - 58px);left:0;right:0;text-align:center;margin:0;font-family:var(--font-display);font-size:1.6rem;color:#ffe9a8;text-shadow:0 3px 0 var(--ink-d),0 0 18px rgba(255,207,92,.7);animation:cvnew .6s cubic-bezier(.2,1.6,.4,1);pointer-events:none}
+@keyframes cvnew{from{transform:scale(.4);opacity:0}}
+@media (max-height:640px){#cardview .cvnew{top:10px;font-size:1.25rem}}
+
+.nw{white-space:nowrap}
+.bdg b,.bdg span,.bigcard b,.bigcard span{hyphens:manual;-webkit-hyphens:manual;overflow-wrap:normal;word-break:normal}
+.moonsay{position:fixed;z-index:45;opacity:0;transform:translateY(-50%);font-family:var(--font-display);font-size:1.15rem;color:#ffc2d9;text-shadow:0 2px 0 var(--ink-d),0 0 8px rgba(255,120,170,.9);pointer-events:none;white-space:nowrap}
+.moonsay.go{animation:moonsay 1.6s ease-out forwards}
+@keyframes moonsay{0%{opacity:0;transform:translate(-6px,-50%) scale(.7)}15%{opacity:1;transform:translate(0,-50%) scale(1.1)}70%{opacity:1;transform:translate(6px,-50%)}100%{opacity:0;transform:translate(14px,-50%)}}
+.bigcard .nw,.bdg .nw{font-size:inherit;position:static}
+
 </style>
 </head>
 <body>
@@ -685,12 +769,13 @@ const DAYS=[
  links:[[`L'ADN : un site apaisant pour voyager sans bouger`,`https://www.ladn.eu/mondes-creatifs/confinement-site-apaisant-voyager-bout-du-monde/`],[`WindowSwap`,`https://www.window-swap.com`],[`Wikipédia : WindowSwap`,`https://en.wikipedia.org/wiki/WindowSwap`]],
  qs:[{id:'4',kind:'choice',text:`Quelle fenêtre pour passer Noël ?`,options:[`Chalet enneigé`,`Plage australe (30° à Noël)`,`Gratte-ciel de Tokyo`,`Village de montagne`,`Mon canapé, point.`]}]},
 
-{d:5,type:'test',noel:false,
- title:`Le chifoumi de la Table`,
- body:`<p>Pierre, feuille, ciseaux. Le jeu le plus simple du monde, et pourtant personne n'aime perdre à table.</p>
- <ol><li>Tirez les huit prénoms au sort pour former un tableau : quarts de finale, demi-finales, finale.</li><li>Chaque duel se joue au meilleur des trois manches.</li><li>Le perdant de la finale offre le prochain chocolat chaud.</li></ol>`,
- links:[],
- qs:[{id:'5',kind:'who',text:`Qui gagnerait le tournoi de chifoumi de la Table ?`,award:`Main d'or`}]},
+{d:5,type:'apprends',noel:true,
+ title:`Le déluge de livres islandais`,
+ body:`<p>En Islande, la veille de Noël, on s'offre des <strong>livres</strong>, et on passe la soirée à lire, souvent avec du chocolat. Ça s'appelle le <em>Jólabókaflóð</em>, « le déluge de livres de Noël ».</p>
+ <p>La tradition est souvent rattachée à la guerre : pourquoi des livres, justement ? (réponse dans le mini-jeu). Chaque année, un catalogue de toutes les nouveautés est distribué dans les foyers du pays.</p>
+ <p class="tip">Idée à voler pour le 24 : un livre par personne, et tout le monde lit en silence jusqu'à ce que quelqu'un craque.</p>`,
+ links:[[`Icelandair : le Jólabókaflóð, déluge de livres de Noël`,`https://www.icelandair.com/fr-fr/blog/jolabokaflod/`],[`Icelandic Literature Center : le déluge de livres`,`https://www.islit.is/en/news/the-christmas-book-flood-a-beloved-icelandic-tradition`]],
+ qs:[{id:'5',kind:'choice',text:`Quel livre offrirais-tu à la Table le 24 au soir ?`,options:[`Un roman policier`,`Une BD`,`Un livre de cuisine`,`Un manga`,`Un livre de jeux de rôle`]}]},
 
 {d:6,type:'histoire',noel:true,
  title:`Saint Nicolas, ses os et le casse de 1087`,
@@ -716,13 +801,12 @@ const DAYS=[
  links:[[`Stelvision : randonnée céleste dans les pas d'Orion`,`https://www.stelvision.com/guide-observation/randonnee-celeste-dans-les-pas-du-chasseur-orion/`],[`timeanddate : comment repérer Orion`,`https://www.timeanddate.com/news/astronomy/how-to-spot-orion`],[`Stellarium Web (planétarium en ligne)`,`https://stellarium-web.org`]],
  qs:[{id:'8',kind:'choice',text:`Quelle planète te ressemble le plus ?`,options:[`Mercure (toujours pressée)`,`Vénus (jour plus long que l'année)`,`Mars (rouge de colère)`,`Jupiter (en grand)`,`Saturne (avec des anneaux)`,`Neptune (froid et lointain)`]}]},
 
-{d:9,type:'apprends',noel:true,
- title:`Le déluge de livres islandais`,
- body:`<p>En Islande, la veille de Noël, on s'offre des <strong>livres</strong>, et on passe la soirée à lire, souvent avec du chocolat. Ça s'appelle le <em>Jólabókaflóð</em>, « le déluge de livres de Noël ».</p>
- <p>La tradition est souvent rattachée à la guerre : pourquoi des livres, justement ? (réponse dans le mini-jeu). Chaque année, un catalogue de toutes les nouveautés est distribué dans les foyers du pays.</p>
- <p class="tip">Idée à voler pour le 24 : un livre par personne, et tout le monde lit en silence jusqu'à ce que quelqu'un craque.</p>`,
- links:[[`Icelandair : le Jólabókaflóð, déluge de livres de Noël`,`https://www.icelandair.com/fr-fr/blog/jolabokaflod/`],[`Icelandic Literature Center : le déluge de livres`,`https://www.islit.is/en/news/the-christmas-book-flood-a-beloved-icelandic-tradition`]],
- qs:[{id:'9',kind:'choice',text:`Quel livre offrirais-tu à la Table le 24 au soir ?`,options:[`Un roman policier`,`Une BD`,`Un livre de cuisine`,`Un manga`,`Un livre de jeux de rôle`]}]},
+{d:9,type:'test',noel:false,
+ title:`Le chifoumi de la Table`,
+ body:`<p>Pierre, feuille, ciseaux. Le jeu le plus simple du monde, et pourtant personne n'aime perdre à table.</p>
+ <ol><li>Tirez les huit prénoms au sort pour former un tableau : quarts de finale, demi-finales, finale.</li><li>Chaque duel se joue au meilleur des trois manches.</li><li>Le perdant de la finale offre le prochain chocolat chaud.</li></ol>`,
+ links:[],
+ qs:[{id:'9',kind:'who',text:`Qui gagnerait le tournoi de chifoumi de la Table ?`,award:`Main d'or`}]},
 
 {d:10,type:'univers',noel:false,
  title:`Avant les consoles, des cartes à jouer`,
@@ -747,34 +831,34 @@ const DAYS=[
  links:[[`Paris Match Belgique : le secret le mieux caché de Matrix`,`https://www.parismatch.be/culture/cinema/2017/10/27/le-secret-le-mieux-cache-de-matrix-a-un-gout-dumami-6XNKSM2LTJA2NFVJYWBIFHTPHE/`],[`Food.com : the opening of The Matrix`,`https://www.food.com/article/sushi-matrix-450`]],
  qs:[{id:'12',kind:'choice',text:`Pilule rouge ou pilule bleue, à la Table ?`,options:[`Rouge : je veux savoir`,`Bleue : je reste dans mon canapé`,`Ni l'une ni l'autre, je prends un chocolat chaud`]}]},
 
-{d:13,type:'test',noel:false,
- title:`Dessine un vélo de mémoire`,
- body:`<p>Chaque membre de la table prend une feuille et un stylo, <strong>sans téléphone</strong>, et dessine un vélo de mémoire en deux minutes. Puis vous comparez avec un vrai vélo (ou une photo).</p>
- <p>Résultat attendu : des chaînes qui ne relient rien, des cadres impossibles, des pédales flottantes. Des chercheurs ont montré que même des gens qui font du vélo régulièrement dessinent souvent un vélo qui ne pourrait pas rouler.</p>`,
- links:[[`The Science of Cycology (université de Liverpool)`,`https://www.liverpool.ac.uk/~rlawson/cycleweb2.html`]],
- qs:[{id:'13',kind:'who',text:`Qui dessine le meilleur vélo ?`,award:`Cycliste de mémoire`}]},
-
-{d:14,type:'apprends',noel:true,
+{d:13,type:'apprends',noel:true,
  title:`Pourquoi le lait végétal rechigne à mousser`,
  body:`<p>Une mousse, ce sont des bulles d'air qu'il faut réussir à faire tenir. Dans le lait de vache, certaines molécules sont particulièrement bonnes à ça. Les boissons végétales contiennent autre chose, souvent en plus petite quantité, et réagissent différemment à la chaleur.</p>
  <p>C'est pour cela que les versions « barista » sont reformulées (matières grasses, stabilisants) afin de mieux résister à la chaleur et à la vapeur.</p>
  <p class="tip">Moralité : si ça ne mousse pas, ce n'est pas toi, c'est de la chimie. À méditer devant un chocolat chaud.</p>`,
  links:[[`Allodocteurs : réussir une mousse de lait`,`https://www.allodocteurs.fr/alimentation/cappuccino-latte-comment-faire-une-mousse-de-lait-maison_30919.html`],[`Fresh Cup : lattes et laits alternatifs`,`https://freshcup.com/latte-art-and-alternative-milks-the-good-the-bad-and-the-tasty`]],
- qs:[{id:'14',kind:'choice',text:`Pour ton chocolat chaud, la garniture ?`,options:[`Chantilly`,`Guimauves`,`Cannelle`,`Piment`,`Nature`]}]},
+ qs:[{id:'13',kind:'choice',text:`Pour ton chocolat chaud, la garniture ?`,options:[`Chantilly`,`Guimauves`,`Cannelle`,`Piment`,`Nature`]}]},
 
-{d:15,type:'apprends',noel:true,
- title:`Treize desserts pour un seul repas`,
- body:`<p>En Provence, le repas de Noël se termine par <strong>treize desserts</strong>, un pour chaque convive de la Cène (Jésus et ses douze apôtres), selon l'explication la plus répandue. On y trouve presque toujours les « quatre mendiants » (raisins secs, figues sèches, amandes, noisettes), de la pompe à l'huile, du nougat blanc et noir, des fruits frais, des calissons.</p>
- <p>Règle de table : en principe, on goûte à chacun. Les desserts restent sur la table jusqu'à trois jours.</p>`,
- links:[[`ProvenceWeb : les 13 desserts du repas de Noël`,`https://www.provenceweb.fr/f/vie-locale/traditions/13-desserts.htm`],[`Provence Camargue Tourisme : les 13 desserts`,`https://www.provence-camargue-tourisme.com/en/les-13-desserts-de-noel-en-provence/`]],
- qs:[{id:'15',kind:'choice',text:`Dessert de Noël à garder pour toujours ?`,options:[`Bûche`,`Galette ou gâteau des rois`,`Panettone`,`Nougat`,`Calissons`,`Rien, je veux juste du fromage`]}]},
+{d:14,type:'test',noel:false,
+ title:`Dessine un vélo de mémoire`,
+ body:`<p>Chaque membre de la table prend une feuille et un stylo, <strong>sans téléphone</strong>, et dessine un vélo de mémoire en deux minutes. Puis vous comparez avec un vrai vélo (ou une photo).</p>
+ <p>Résultat attendu : des chaînes qui ne relient rien, des cadres impossibles, des pédales flottantes. Des chercheurs ont montré que même des gens qui font du vélo régulièrement dessinent souvent un vélo qui ne pourrait pas rouler.</p>`,
+ links:[[`The Science of Cycology (université de Liverpool)`,`https://www.liverpool.ac.uk/~rlawson/cycleweb2.html`]],
+ qs:[{id:'14',kind:'who',text:`Qui dessine le meilleur vélo ?`,award:`Cycliste de mémoire`}]},
 
-{d:16,type:'univers',noel:false,
- title:`Doom cache un message à l'envers (et la tête d'un développeur)`,
- body:`<p>Dans <em>Doom II</em> (1994), le boss final est un gigantesque mur à tête de démon, l'<strong>Icône du Péché</strong>. Quand il se réveille, il pousse un cri. Si on passe ce son à l'envers, on entend : <em>« To win the game, you must kill me, John Romero ! »</em> (« pour gagner, tu dois me tuer, John Romero »).</p>
- <p>La voix est celle de John Romero lui-même, un des développeurs, retravaillée par le compositeur Robert Prince. Et ce n'est pas tout : dans le cerveau du boss se cache la <strong>tête de Romero empalée sur un pieu</strong>. C'est elle qu'il faut toucher pour le vaincre.</p>`,
- links:[[`Doom Wiki : Icon of Sin`,`https://doomwiki.org/wiki/Icon_of_Sin`]],
- qs:[{id:'16',kind:'who',text:`Qui finirait Doom sans mourir une seule fois ?`,award:`Slayer de la Table`}]},
+{d:15,type:'test',noel:true,
+ title:`Le chocolat chaud, deviné les yeux fermés`,
+ body:`<p>Pas de tasses, pas de casseroles : cette dégustation se joue à l'écran. Quatre recettes de chocolat chaud, quatre indices. À toi de retrouver qui est qui, comme si tu goûtais à l'aveugle.</p>
+ <p>Rien à préparer, rien à laver. Si l'envie te prend d'en faire un vrai après, personne ne t'en empêchera.</p>`,
+ links:[[`Hérodote : la saga du chocolat`,`https://www.herodote.net/La_saga_du_chocolat-synthese-657.php`]],
+ qs:[{id:'15',kind:'who',text:`Qui trouvera les quatre chocolats chauds du premier coup ?`,award:`Palais d'or`}]},
+
+{d:16,type:'apprends',noel:false,
+ title:`Pourquoi dit-on « quatre-vingt-dix » ?`,
+ body:`<p>En français, on compte en base 10 jusqu'à 69, puis on part en base 20 : <em>soixante-dix</em> (60+10), <em>quatre-vingts</em> (4×20), <em>quatre-vingt-dix</em> (4×20+10). C'est un reste d'un ancien système en vingtaines. Son origine est débattue (substrat gaulois, influence normande...).</p>
+ <p>En Belgique et en Suisse romande, on dit <strong>septante</strong> et <strong>nonante</strong> ; certaines régions suisses disent aussi <em>huitante</em> pour 80. Et le danois est pire : <em>halvtreds</em> pour 50 vient de « deux fois vingt et demi ».</p>`,
+ links:[[`Académie française : soixante-dix et quatre-vingt`,`https://dictionnaire-academie.fr/article/QDL078`]],
+ qs:[{id:'16',kind:'choice',text:`Septante et nonante : on adopte ?`,options:[`Oui, ça simplifie`,`Non, quatre-vingt-dix c'est mon identité`,`Je compte en anglais pour fuir le problème`]},{id:'16b',kind:'who',text:`Qui a tricoté le pull le plus moche ?`,award:`Pull le plus moche`}]},
 
 {d:17,type:'univers',noel:false,
  title:`Le Monopoly a été inventé pour critiquer le capitalisme`,
@@ -791,19 +875,19 @@ const DAYS=[
  links:[[`Wikipédia : Fondation SCP`,`https://fr.wikipedia.org/wiki/Fondation_SCP`],[`SCP Foundation (wiki)`,`https://scp-wiki.wikidot.com`]],
  qs:[{id:'18',kind:'who',text:`Qui survivrait le plus longtemps dans un film d'horreur ?`,award:`Dernier·ère survivant·e`}]},
 
-{d:19,type:'apprends',noel:false,
- title:`Pourquoi dit-on « quatre-vingt-dix » ?`,
- body:`<p>En français, on compte en base 10 jusqu'à 69, puis on part en base 20 : <em>soixante-dix</em> (60+10), <em>quatre-vingts</em> (4×20), <em>quatre-vingt-dix</em> (4×20+10). C'est un reste d'un ancien système en vingtaines. Son origine est débattue (substrat gaulois, influence normande...).</p>
- <p>En Belgique et en Suisse romande, on dit <strong>septante</strong> et <strong>nonante</strong> ; certaines régions suisses disent aussi <em>huitante</em> pour 80. Et le danois est pire : <em>halvtreds</em> pour 50 vient de « deux fois vingt et demi ».</p>`,
- links:[[`Académie française : soixante-dix et quatre-vingt`,`https://dictionnaire-academie.fr/article/QDL078`]],
- qs:[{id:'19',kind:'choice',text:`Septante et nonante : on adopte ?`,options:[`Oui, ça simplifie`,`Non, quatre-vingt-dix c'est mon identité`,`Je compte en anglais pour fuir le problème`]},{id:'19b',kind:'who',text:`Qui a tricoté le pull le plus moche ?`,award:`Pull le plus moche`}]},
+{d:19,type:'univers',noel:false,
+ title:`Doom cache un message à l'envers (et la tête d'un développeur)`,
+ body:`<p>Dans <em>Doom II</em> (1994), le boss final est un gigantesque mur à tête de démon, l'<strong>Icône du Péché</strong>. Quand il se réveille, il pousse un cri. Si on passe ce son à l'envers, on entend : <em>« To win the game, you must kill me, John Romero ! »</em> (« pour gagner, tu dois me tuer, John Romero »).</p>
+ <p>La voix est celle de John Romero lui-même, un des développeurs, retravaillée par le compositeur Robert Prince. Et ce n'est pas tout : dans le cerveau du boss se cache la <strong>tête de Romero empalée sur un pieu</strong>. C'est elle qu'il faut toucher pour le vaincre.</p>`,
+ links:[[`Doom Wiki : Icon of Sin`,`https://doomwiki.org/wiki/Icon_of_Sin`]],
+ qs:[{id:'19',kind:'who',text:`Qui finirait Doom sans mourir une seule fois ?`,award:`Slayer de la Table`}]},
 
-{d:20,type:'test',noel:true,
- title:`Le chocolat chaud, deviné les yeux fermés`,
- body:`<p>Pas de tasses, pas de casseroles : cette dégustation se joue à l'écran. Quatre recettes de chocolat chaud, quatre indices. À toi de retrouver qui est qui, comme si tu goûtais à l'aveugle.</p>
- <p>Rien à préparer, rien à laver. Si l'envie te prend d'en faire un vrai après, personne ne t'en empêchera.</p>`,
- links:[[`Hérodote : la saga du chocolat`,`https://www.herodote.net/La_saga_du_chocolat-synthese-657.php`]],
- qs:[{id:'20',kind:'who',text:`Qui trouvera les quatre chocolats chauds du premier coup ?`,award:`Palais d'or`}]},
+{d:20,type:'apprends',noel:true,
+ title:`Treize desserts pour un seul repas`,
+ body:`<p>En Provence, le repas de Noël se termine par <strong>treize desserts</strong>, un pour chaque convive de la Cène (Jésus et ses douze apôtres), selon l'explication la plus répandue. On y trouve presque toujours les « quatre mendiants » (raisins secs, figues sèches, amandes, noisettes), de la pompe à l'huile, du nougat blanc et noir, des fruits frais, des calissons.</p>
+ <p>Règle de table : en principe, on goûte à chacun. Les desserts restent sur la table jusqu'à trois jours.</p>`,
+ links:[[`ProvenceWeb : les 13 desserts du repas de Noël`,`https://www.provenceweb.fr/f/vie-locale/traditions/13-desserts.htm`],[`Provence Camargue Tourisme : les 13 desserts`,`https://www.provence-camargue-tourisme.com/en/les-13-desserts-de-noel-en-provence/`]],
+ qs:[{id:'20',kind:'choice',text:`Dessert de Noël à garder pour toujours ?`,options:[`Bûche`,`Galette ou gâteau des rois`,`Panettone`,`Nougat`,`Calissons`,`Rien, je veux juste du fromage`]}]},
 
 {d:21,type:'test',noel:false,
  title:`Le bonhomme devin des régions`,
@@ -853,9 +937,9 @@ const GAMES={
  2:{"q": "Le bourdonnement des sabres laser de Star Wars a été fabriqué à partir de…", "o": ["un moteur de projecteur de cinéma et un téléviseur", "un rasoir électrique et un aspirateur", "un synthétiseur des années 70"], "a": 0, "e": "Ben Burtt a mélangé le ronron de vieux projecteurs et le grésillement d'une télé, puis agité un micro devant un haut-parleur pour le mouvement."},
  7:{"q": "Le caganer, dans la crèche catalane, est…", "o": ["un petit personnage accroupi qui fait ses besoins", "un berger qui dort", "un roi mage en retard"], "a": 0, "e": "Caché dans le décor, il porte chance quand on le trouve."},
  12:{"q": "Le code vert qui tombe dans le générique de Matrix vient de…", "o": ["recettes de sushi japonaises", "vrais mots de passe bancaires", "un alphabet inventé par les réalisatrices"], "a": 0, "e": "Selon le chef décorateur, ce sont des caractères de livres de recettes japonaises, scannés et retravaillés."},
- 15:{"q": "Les 13 desserts de Noël provençaux représentent…", "o": ["Jésus et ses douze apôtres", "les treize communes de Provence", "les treize lunes de l'année"], "a": 0, "e": "C'est l'explication la plus répandue (la Cène)."},
+ 16:{"q": "Que veut dire « halvtreds » en danois ?", "o": ["30", "50", "70"], "a": 1, "e": "50 : « deux fois vingt et demi » (2,5 × 20)."},
  17:{"q": "Combien Parker Brothers a-t-il payé le brevet de Lizzie Magie ?", "o": ["500 dollars", "50 000 dollars", "1 million de dollars"], "a": 0, "e": "500 dollars selon la plupart des sources, alors que le Monopoly allait rapporter des fortunes."},
- 19:{"q": "Que veut dire « halvtreds » en danois ?", "o": ["30", "50", "70"], "a": 1, "e": "50 : « deux fois vingt et demi » (2,5 × 20)."},
+ 20:{"q": "Les 13 desserts de Noël provençaux représentent…", "o": ["Jésus et ses douze apôtres", "les treize communes de Provence", "les treize lunes de l'année"], "a": 0, "e": "C'est l'explication la plus répandue (la Cène)."},
  22:{"q": "Le Krampus accompagne saint Nicolas pour…", "o": ["punir les enfants pas sages", "distribuer des bonbons", "garder les rennes"], "a": 0, "e": "Chaînes, cornes, fourrure : c'est le côté sombre de la tournée."},
  24:{"q": "Vrai ou faux : un match de football organisé et arbitré, avec équipes complètes, est solidement prouvé pendant la trêve de 1914.", "o": ["Vrai", "Faux"], "a": 1, "e": "Il y a des témoignages de parties improvisées, mais pas de preuve solide d'un match organisé avec équipes et arbitre."},
 };
@@ -863,22 +947,22 @@ const TEASERS=[
  `Demain : un bruit que toute la galaxie connaît par cœur.`,
  `Demain : un mensonge historique.`,
  `Demain : une fenêtre. Pas la tienne.`,
- `Demain : un test à faire à table. Ne triche pas, ça se saurait.`,
+ `Demain : un cadeau qui se lit.`,
  `Demain : une histoire de vol d'os dans une église.`,
  `Demain : une bûche qui fait des cadeaux. Oui, vraiment.`,
  `Demain : lève la tête, il y aura trois étoiles alignées.`,
- `Demain : un cadeau qui se lit.`,
+ `Demain : un test à faire à table. Ne triche pas, ça se saurait.`,
  `Demain : avant les consoles, il y avait… (indice : des fleurs).`,
  `Demain : un compliment qui rugit.`,
  `Demain : une pluie de lettres vertes. Tu crois savoir ce qu'elle raconte ?`,
- `Demain : sors un stylo. Ça va piquer l'ego.`,
  `Demain : un truc qui mousse, ou pas.`,
- `Demain : treize. C'est le chiffre.`,
- `Demain : un message caché à l'envers, signé d'un développeur.`,
+ `Demain : sors un stylo. Ça va piquer l'ego.`,
+ `Demain : quatre chocolats chauds du monde à deviner les yeux fermés. Aucune tasse à laver.`,
+ `Demain : on compte. Mal. Ou bien.`,
  `Demain : un jeu censé t'apprendre à détester les propriétaires.`,
  `Demain : lumière tamisée recommandée. Case sombre.`,
- `Demain : on compte. Mal. Ou bien.`,
- `Demain : quatre chocolats chauds du monde à deviner les yeux fermés. Aucune tasse à laver.`,
+ `Demain : un message caché à l'envers, signé d'un développeur.`,
+ `Demain : treize. C'est le chiffre.`,
  `Demain : le bonhomme lit dans tes mots. Il a acheté un turban.`,
  `Demain : quelqu'un de cornu t'attend.`,
  `Demain : la neige, une reine, un karaoké.`,
@@ -888,25 +972,25 @@ const TEASERS=[
 const OUTFITS={
  1:{c:'c16',n:'la couronne de l\'Avent',l:'Couronne de l\'Avent à bougies. J\'ai déjà assez de problèmes avec la chaleur.'},
  2:{c:'c17',n:'la robe de Jedi et le sabre laser',l:'Robe de Jedi et sabre laser. Écoute bien le bruit qu\'il fait : vvvmmmm.'},
- 5:{c:'c18',n:'le chapeau de champion de chifoumi',l:'Chapeau de champion du chifoumi. Je joue toujours au hasard et je me plains toujours de perdre.'},
- 11:{c:'c25',n:'la capuche de tigre',l:'Capuche de tigre. Si tu me dis merci, dis-le comme à Marseille.'},
- 14:{c:'c20',n:'le tablier de barista',l:'Tablier de barista. Mon lait végétal mousse mal, comme tout le monde.'},
- 15:{c:'c21',n:'la couronne d\'olivier et de figues',l:'Couronne d\'olivier et de figues. Treize desserts, un seul bonhomme de neige : je prends le nougat.'},
- 16:{c:'c22',n:'le casque de marine et son fusil',l:'Casque vert et fusil. Je cherche un message caché à l\'envers, pour John Romero.'},
- 19:{c:'c23',n:'le dossard 90',l:'Dossard 90 : quatre-vingt-dix en France, nonante en Belgique et en Suisse. Moi, je suis hors course.'},
- 20:{c:'c24',n:'la toque et la tasse de chocolat chaud',l:'Toque et tasse de chocolat chaud. Je goûte à l\'aveugle, mais seulement avec les mots.'},
- 21:{c:'c26',n:'le turban de devin',l:'Turban de devin. Pense à un mot, je devine d\'où tu viens.'},
+ 3:{c:'c13',n:'la fausse moustache et la mallette',l:'Fausse moustache et mallette attachée au poignet. Opération Mincemeat, version neige.'},
  4:{c:'c3',n:'la casquette de chef de gare',l:'Casquette de chef de gare. Prochain départ : la fenêtre de ton choix.'},
+ 5:{c:'c7',n:'une pile de livres sur la tête',l:'Une pile de livres sur la tête. Tradition islandaise : on lit, et on mange du chocolat.'},
  6:{c:'c5',n:'la mitre de Saint Nicolas',l:'Mitre de Saint Nicolas. Pas de reliques, juste de la neige.'},
  7:{c:'c6',n:'la barretina catalane',l:'Barretina catalane. Je surveille la bûche qui fait des cadeaux.'},
  8:{c:'c1',n:'le chapeau de mage étoilé',l:'Chapeau de mage étoilé. Je lance Orion. Il rate rarement.'},
- 9:{c:'c7',n:'une pile de livres sur la tête',l:'Une pile de livres sur la tête. Tradition islandaise : on lit, et on mange du chocolat.'},
+ 9:{c:'c18',n:'le chapeau de champion de chifoumi',l:'Chapeau de champion du chifoumi. Je joue toujours au hasard et je me plains toujours de perdre.'},
  10:{c:'c8',n:'le costume de chocobo',l:'Tenue de chocobo. Wark ! Avant les consoles, il y avait les cartes. Moi, je préfère les jeux où l\'on court.'},
+ 11:{c:'c25',n:'la capuche de tigre',l:'Capuche de tigre. Si tu me dis merci, dis-le comme à Marseille.'},
  12:{c:'c9',n:'la pluie de code vert et la pilule rouge',l:'Pluie de code vert et pilule rouge. Je sais ce que disent les lettres, mais je ne dirai rien avant ta réponse.'},
- 13:{c:'c10',n:'un casque de vélo',l:'Casque de vélo. Je sais dessiner un vélo, moi : deux boules et un guidon.'},
+ 13:{c:'c20',n:'le tablier de barista',l:'Tablier de barista. Mon lait végétal mousse mal, comme tout le monde.'},
+ 14:{c:'c10',n:'un casque de vélo',l:'Casque de vélo. Je sais dessiner un vélo, moi : deux boules et un guidon.'},
+ 15:{c:'c24',n:'la toque et la tasse de chocolat chaud',l:'Toque et tasse de chocolat chaud. Je goûte à l\'aveugle, mais seulement avec les mots.'},
+ 16:{c:'c23',n:'le dossard 90',l:'Dossard 90 : quatre-vingt-dix en France, nonante en Belgique et en Suisse. Moi, je suis hors course.'},
  17:{c:'c14',n:'la capuche de dragon et son tas d\'or',l:'Capuche de dragon et tas d\'or. Au Monopoly, c\'est le même plan : tout garder pour soi. Ne touche pas aux pièces, elles sont en chocolat.'},
  18:{c:'c12',n:'le costume de mimic',l:'Je suis un mimic. Ne m\'ouvre pas, je mords. Classé dangereux par la Fondation.'},
- 3:{c:'c13',n:'la fausse moustache et la mallette',l:'Fausse moustache et mallette attachée au poignet. Opération Mincemeat, version neige.'},
+ 19:{c:'c22',n:'le casque de marine et son fusil',l:'Casque vert et fusil. Je cherche un message caché à l\'envers, pour John Romero.'},
+ 20:{c:'c21',n:'la couronne d\'olivier et de figues',l:'Couronne d\'olivier et de figues. Treize desserts, un seul bonhomme de neige : je prends le nougat.'},
+ 21:{c:'c26',n:'le turban de devin',l:'Turban de devin. Pense à un mot, je devine d\'où tu viens.'},
  22:{c:'c11',n:'le heaume de chevalier',l:'Heaume de chevalier. Pour croiser Krampus sans y laisser une corne.'},
  23:{c:'c15',n:'la couronne de givre',l:'Couronne de givre. Libérée, délivrée : version bonhomme de neige.'},
  24:{c:'c2',n:'le maillot de foot',l:'Maillot bleu, rouge et blanc. Il paraît qu\'on a joué au foot pendant la trêve.'}
@@ -916,22 +1000,22 @@ const SNOW_DAILY=[
  `Vvvmmmm. Pardon, je répète mon bruitage pour un film.`,
  `Psst. Là-haut, à gauche : la Lune a l'air de bouder. Va voir de plus près.`,
  `Je n'ai pas de fenêtre. J'ai vue sur un sapin, c'est déjà pas mal.`,
- `Chifoumi aujourd'hui. Je te préviens : je n'ai pas de mains, donc je ne peux pas perdre.`,
+ `Un livre, un chocolat chaud, et personne qui parle. Je rêve.`,
  `Aujourd'hui, c'est la Saint-Nicolas. Je ne vole pas d'os, je te le promets.`,
  `J'ai mis une écharpe. Pas pour le froid, pour le style.`,
  `Ça fume au-dessus du toit. Regarde la cheminée de plus près : elle a quelque chose à dire.`,
- `Un livre, un chocolat chaud, et personne qui parle. Je rêve.`,
+ `Chifoumi aujourd'hui. Je te préviens : je n'ai pas de mains, donc je ne peux pas perdre.`,
  `Quelqu'un me traite de Ronflex aujourd'hui. C'est un compliment, à mon avis.`,
  `Tié un tigre ? Non : tié un bonhomme de neige. Mais merci quand même.`,
  `Un mot du titre brille un peu trop. Il cache quelque chose. Essaie de cliquer dessus.`,
- `Aujourd'hui, un truc à dessiner. Mon vélo à moi n'a pas de roues. Ça compte ?`,
  `Je ne mousse pas, moi non plus. Pas de lait végétal pour la neige.`,
- `Treize desserts ! Je prends tout, sauf le chaud.`,
- `Si tu m'entends à l'envers aujourd'hui, ne panique pas. C'est normal.`,
+ `Aujourd'hui, un truc à dessiner. Mon vélo à moi n'a pas de roues. Ça compte ?`,
+ `Les chocolats chauds, c'est une menace pour ma santé. J'observe.`,
+ `Chez moi, on dit nonante. J'ai des cousins belges, ils ont moins froid.`,
  `Les petites étoiles du bas ne sont pas que décoratives. Tente la première.`,
  `Si je dois survivre dans un film d'horreur, je me cache dans mon propre sapin.`,
- `Chez moi, on dit nonante. J'ai des cousins belges, ils ont moins froid.`,
- `Les chocolats chauds, c'est une menace pour ma santé. J'observe.`,
+ `Si tu m'entends à l'envers aujourd'hui, ne panique pas. C'est normal.`,
+ `Treize desserts ! Je prends tout, sauf le chaud.`,
  `Le jour le plus court de l'année, et moi, j'ai des dons de voyance. Va voir la case.`,
  `Le cadenas de la case 25 clignote. Il a un secret. Va le voir.`,
  `Je ne chante pas Libérée, délivrée. Je ne suis pas libérée, je suis posé là.`,
@@ -945,8 +1029,8 @@ const BONUS=[
  {n:4,day:17,target:'legend',title:`L'étoile du bas`,text:`Il y a plus d'arbres sur Terre (environ 3 000 milliards) que d'étoiles dans la Voie lactée (100 à 400 milliards).`},
  {n:5,day:22,target:'lock',title:'Le cadenas clignote',text:`Un jour sur Vénus (243 jours terrestres) dure plus longtemps que son année (225 jours terrestres).`}
 ];
-const SPECIAL_DAYS=[5,10,13,18,20];
-const FIRST_DAYS=[1,2,7,12,15,17,19,22,24];
+const SPECIAL_DAYS=[9,10,14,15,18];
+const FIRST_DAYS=[1,2,7,12,16,17,20,22,24];
 
 const CAT_IMGS=["data:image/webp;base64,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", "data:image/webp;base64,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", "data:image/webp;base64,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"];
 
@@ -1127,10 +1211,13 @@ function snow(){
 
 /* ---------- toast ---------- */
 let toastT;
-document.addEventListener('click',e=>{const t=document.getElementById('toast');if(t&&e.target===t){clearTimeout(toastT);t.className='';}});
+function hideToast(){clearTimeout(toastT);const t=$('#toast');if(t)t.className='';}
+function armToast(){clearTimeout(toastT);toastT=setTimeout(hideToast,30000);}
+['pointermove','pointerdown','keydown','scroll','touchstart','wheel'].forEach(ev=>addEventListener(ev,()=>{const t=document.getElementById('toast');if(t&&t.classList.contains('show'))armToast();},{passive:true}));
 function toast(msg,isCheat){
-  const t=$('#toast');t.textContent=msg;t.className=(isCheat?'cheat ':'')+'show';
-  clearTimeout(toastT);toastT=setTimeout(()=>{t.className='';},isCheat?9000:Math.max(7000,3000+msg.length*70));
+  const t=$('#toast');t.innerHTML='';t.appendChild(txt('span','tmsg',msg));
+  const x=txt('button','tclose','×');x.type='button';x.setAttribute('aria-label','Fermer le message');x.addEventListener('click',hideToast);t.appendChild(x);
+  t.className=(isCheat?'cheat ':'')+'show';armToast();
 }
 
 /* ---------- grille ---------- */
@@ -1341,7 +1428,7 @@ function openDay(x){
   }
   rest.appendChild(el('div','body',x.body));
   rest.appendChild(Game.special(x));
-  if(x.d===19)rest.appendChild(pullBlock());
+  if(x.d===16)rest.appendChild(pullBlock());
   if(TIGRE_DAY&&x.d===TIGRE_DAY)rest.appendChild(tigreBlock());
   if(x.d===GIFT_DAY)rest.appendChild(giftBlock());
   if(x.d===21)rest.appendChild(devinBlock());
@@ -1554,7 +1641,7 @@ $('#who').addEventListener('click',e=>{if(e.target.id==='who'&&!$('#who').classL
 
 
 /* ---------- musique 8-bit (générée, aucun fichier) ---------- */
-const TRACK_BY_DAY={1:'d1',2:'d2',3:'d3',4:'train',5:'d5',6:'d6',7:'d7',8:'d8',9:'d9',10:'choco',11:'d11',12:'d12',13:'d13',14:'d14',15:'d15',16:'d16',17:'jdr',18:'mimic',19:'d19',20:'d20',21:'d21',22:'dragon',23:'d23',24:'foot',25:'noel'};
+const TRACK_BY_DAY={1:'d1',2:'d2',3:'d3',4:'train',5:'d9',6:'d6',7:'d7',8:'d8',9:'d5',10:'choco',11:'d11',12:'d12',13:'d14',14:'d13',15:'d20',16:'d19',17:'jdr',18:'mimic',19:'d16',20:'d15',21:'d21',22:'dragon',23:'d23',24:'foot',25:'noel'};
 const Music=(()=>{
   let ctx=null,master=null,timer=null,on=false,step=0,nextT=0;
   const mf=m=>440*Math.pow(2,(m-69)/12);
@@ -1703,12 +1790,12 @@ function setupMusic(){
   const paint=()=>{btn.setAttribute('aria-pressed',String(Music.on));btn.classList.toggle('on',Music.on);btn.title=Music.on?'Couper la musique':'Mettre la musique';};
   btn.addEventListener('click',()=>{
     if(Music.on){Music.stop();store.set('ate_music','0');}
-    else{Music.start();store.set('ate_music','1');}
+    else{Music.start();store.set('ate_music','1');Game.musDay();}
     paint();
   });
   paint();
   if(store.get('ate_music')==='1'){
-    const kick=()=>{removeEventListener('pointerdown',kick);if(store.get('ate_music')==='1'&&!Music.on){Music.start();paint();}};
+    const kick=()=>{removeEventListener('pointerdown',kick);if(store.get('ate_music')==='1'&&!Music.on){Music.start();paint();Game.musDay();}};
     addEventListener('pointerdown',kick);
   }
 }
@@ -1796,7 +1883,7 @@ function bubble(host,ground,msg){
   const lo=8-gl+bw/2,hi=document.documentElement.clientWidth-8-gl-bw/2;
   b.style.left=Math.max(lo,Math.min(hi,gx))+'px';
   b.style.bottom=(ground.clientHeight-host.offsetTop+6)+'px';
-  const dur=Math.max(6500,3000+msg.length*70);
+  const dur=Math.max(9500,6000+msg.length*70);
   b.style.setProperty('--d',dur+'ms');
   b.classList.remove('show');void b.offsetWidth;b.classList.add('show');
   clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove('show'),dur);
@@ -1814,7 +1901,7 @@ function nextFrom(h,pool,key){
 }
 // répliques réservées à un jour (d) ou à une semaine de décor (w)
 const SNOWMAN_DATED=[
- {d:20,t:"Le chocolat chaud me fait de l'œil aujourd'hui. Je résiste. Je suis de glace."},
+ {d:15,t:"Le chocolat chaud me fait de l'œil aujourd'hui. Je résiste. Je suis de glace."},
  {w:2,t:"Cette semaine, je pétris, je malaxe, et je fais monter la pâte bien comme il faut."},
  {w:2,t:"À la boulangerie, on m'a dit que j'avais la plus belle baguette du quartier. Je n'ai pas compris, mais j'ai dit merci."}
 ];
@@ -1855,7 +1942,7 @@ function setupEggs(){
       h.classList.remove('jump','shk');void h.offsetWidth;h.classList.add(anim);
       if(h.classList.contains('snowman')){
         const ts=snowTalk();ts.n++;store.set('ate_snowtalk',ts);
-        if(ts.n>7)return;
+        if(ts.n>6)return;
         burst(ground,h,14,false);
         Music.arp([72,76,79,84]);
         if(ts.n===3){
@@ -1864,8 +1951,9 @@ function setupEggs(){
           setTimeout(()=>{h.classList.remove('melt');h.dataset.cos=nx.cos;bubble(h,ground,nx.line);},3800);
         }else if(ts.n===2&&teaseLine())bubble(h,ground,teaseLine());
         else if(ts.n===4&&lastLine())bubble(h,ground,lastLine());
-        else if(ts.n===6)bubble(h,ground,pick(SULK_ARG));
-        else if(ts.n===7){bubble(h,ground,pick(SULK_END));Game.setSulk();}
+        else if(ts.n===5)bubble(h,ground,pick(SULK_ARG));
+        else if(ts.n===6){bubble(h,ground,pick(SULK_END));Game.setSulk();}
+        else if(!Game.flag('uwu')&&Math.random()<.3)bubble(h,ground,pick(['La lune est très chatouilleuse, tu savais ?','Psst. La lune rougit quand on insiste.','Ne dis à personne que la lune est timide.']));
         else bubble(h,ground,nextFrom(h,snowPool(),'snow'));
       }else{
         burst(ground,h,12,true);
@@ -2028,18 +2116,21 @@ function setupBird(){
   });
 }
 function setupSnowball(){
-  const s=$('#sball');if(!s)return;let size=1,rolls=0,x=52,rot=0;
+  const s=$('#sball');if(!s)return;let size=1,rolls=0,x=52,rot=0;const MAXR=10;
+  const target=()=>{const sm=$('.egg.snowman');return Math.max(3,((sm&&sm.offsetHeight)||100)*1.5/22);};
   const place=()=>{s.style.setProperty('--sz',size);s.style.setProperty('--x',x+'%');s.style.setProperty('--r',rot+'deg');};
   place();
   s.addEventListener('click',()=>{
     rolls++;
-    if(rolls>=7){
+    if(rolls===MAXR-1){const sm=$('.egg.snowman'),g=$('.ground');if(sm&&g)setTimeout(()=>bubble(sm,g,pick(['Euh… elle fonce sur moi, là ?','Elle est plus grosse que moi. Je n\'aime pas ça.','Si elle roule par ici, je démissionne.'])),500);}
+    if(rolls>=MAXR){
       s.classList.add('away');Music.arp([67,64,60,55]);
       toast('Elle est trop grosse ! La boule de neige part rouler toute seule.');Game.flag('sball',1);Game.toy('roll');
       setTimeout(()=>{s.classList.remove('away');size=1;rolls=0;x=52;rot=0;place();},2600);return;
     }
-    let nx,tries=0;do{nx=6+Math.random()*80;tries++;}while(Math.abs(nx-x)<28&&tries<20);
-    const dir=nx>x?1:-1;rot+=dir*(Math.abs(nx-x)*14);x=nx;size=Math.min(2.2,size+.2);
+    const T=target(),lo=6+Math.min(16,size*2.2),hi=86-Math.min(22,size*3);
+    let nx,tries=0;do{nx=lo+Math.random()*(hi-lo);tries++;}while(Math.abs(nx-x)<20&&tries<20);
+    const dir=nx>x?1:-1;rot+=dir*(Math.abs(nx-x)*14);x=nx;size=1+(T-1)*Math.pow(rolls/(MAXR-1),1.25);
     s.classList.remove('hop');void s.offsetWidth;s.classList.add('hop');
     place();Music.blip(196+rolls*30,.12,'triangle',.06);Game.toy('roll');
   });
@@ -2183,6 +2274,12 @@ function setupWeek(){
       $('#toys').appendChild(f);setTimeout(()=>f.remove(),12500);};
     setTimeout(fly,5000);setInterval(fly,42000);
   }
+  /* la sorcière repasse de temps en temps pour les retardataires (semaines 3 et 4) */
+  if(w>=3){const late=()=>{if(Game.flag('witch')||document.hidden||document.body.classList.contains('ov')||RM())return;
+      const f=el('button','flyer');f.type='button';f.tabIndex=-1;f.setAttribute('aria-label','Une sorcière livreuse, en retard');f.innerHTML=WITCH_SVG;
+      f.addEventListener('click',()=>{const r=f.getBoundingClientRect();sparkle(r.left+r.width/2,r.top+r.height/2,14,'#ffcf5c');Game.toy('witch');toast('La sorcière était en retard sur sa tournée. Elle te fait coucou quand même.');});
+      $('#toys').appendChild(f);setTimeout(()=>f.remove(),12500);};
+    setTimeout(late,25000);setInterval(late,110000);}
 }
 function setupAmbiance(){setupWeek();setupStar();setupSnowDepth();setupSky();setupShootingStars();setupSleigh();}
 
@@ -2384,7 +2481,8 @@ function kaoTile(b){
 /* mode uwu secret : taper « uwu », ou toucher 5 fois la lune */
 let uwuT=null;
 function uwuMode(){
-  document.body.classList.add('uwu');toast('Mode uwu activé (˶ᵔ ᵕ ᵔ˶) Tout le chalet rougit pendant 30 secondes.');
+  document.body.classList.add('uwu');toast('Mode uwu activé (˶ᵔ ᵕ ᵔ˶) Toute la page rougit pendant 30 secondes.');
+  if(!RM())for(let i=0;i<26;i++){const hh=el('span','uheart');hh.textContent=['♥','♡','❤'][i%3];hh.style.left=(Math.random()*96)+'vw';hh.style.animationDelay=(Math.random()*24)+'s';hh.style.fontSize=(14+Math.random()*18)+'px';document.body.appendChild(hh);setTimeout(()=>hh.remove(),30500);}
   Music.arp([84,88,91,96,91,88]);if(!Game.flag('uwu'))Game.flag('uwu',1);
   const h=$('.egg.snowman');if(h)setTimeout(()=>bubble(h,$('.ground'),'uwu… tu m\'as eu.'),600);
   clearTimeout(uwuT);uwuT=setTimeout(()=>document.body.classList.remove('uwu'),30000);
@@ -2399,7 +2497,11 @@ function setupSecrets(){
     if(buf.endsWith('uwu')){buf='';uwuMode();}
     else if(/ti[ée]untigre$|tesuntigre$/.test(buf)){buf='';tigreSays();}
   });
-  const moon=$('.moon');if(moon){let n=0,t0=0;moon.addEventListener('click',()=>{const now=Date.now();if(now-t0>4000)n=0;t0=now;n++;if(n>=5){n=0;uwuMode();}});}
+  const moon=$('.moon');if(moon){let n=0,t0=0,rt=null;moon.style.cursor='pointer';moon.addEventListener('click',()=>{const now=Date.now();if(now-t0>4000)n=0;t0=now;n++;
+    moon.classList.remove('mwig');void moon.getBoundingClientRect();moon.classList.add('mwig');moon.style.setProperty('--mb',Math.min(n,4)/4);
+    const r=moon.getBoundingClientRect();const say=['','hi','hi hi','hi hi hi','>///<'][n];if(say){let m=document.querySelector('.moonsay');if(!m){m=el('span','moonsay');document.body.appendChild(m);}m.textContent=say;m.style.left=(r.right+8)+'px';m.style.top=(Math.max(r.top+r.height*.5,14))+'px';m.classList.remove('go');void m.offsetWidth;m.classList.add('go');clearTimeout(m._t);m._t=setTimeout(()=>m.classList.remove('go'),1600);}
+    Music.blip(880+n*120,.06,'triangle',.05);clearTimeout(rt);rt=setTimeout(()=>{moon.style.setProperty('--mb',0);n=0;},4000);
+    if(n>=5){n=0;uwuMode();}});}
 }
 /* case 8 : dire « tié un tigre » au bonhomme */
 function tigreBlock(){
@@ -2506,8 +2608,9 @@ const Game=(()=>{
   /* récupération sur un autre appareil : on relit le tableur pour ce prénom */
   function snapshot(){
     const f=GS.flags||{};const keep={};
-    ['flk','bub','bird','roll','blb','glo','sball','wish','gift','hit','sock','pull','uwu','tigre','devinko','devin','maudit','etoile','witch','dragon','lamp','lit','cheat','sulk','cat'].forEach(k=>{if(f[k])keep[k]=f[k];});
+    ['flk','bub','bird','roll','blb','glo','sball','wish','gift','hit','sock','pull','uwu','tigre','devinko','devin','maudit','etoile','witch','dragon','lamp','lit','cheat','sulk','cat','q42','q42a','chifwin'].forEach(k=>{if(f[k])keep[k]=f[k];});
     if(f.cos)keep.cos=Object.keys(f.cos).join('.');
+    if(f.mus)keep.mus=Object.keys(f.mus).join('.');
     return JSON.stringify({e:GS.eggs||0,f:keep});
   }
   let lastSnapT=0;
@@ -2527,7 +2630,7 @@ const Game=(()=>{
       else if((m=/^b(\d)$/.exec(id))){if(!GS.bonus[m[1]]){GS.bonus[m[1]]=1;n++;}GS.ev[id]=a;GS.sent[id]=1;}
       else if(/^\d+[ab]?$/.test(id)){if(!myVotes[id]){myVotes[id]=a;n++;}}
       else if(id==='s'){try{const o=JSON.parse(a);GS.eggs=Math.max(GS.eggs||0,o.e||0);const f=o.f||{};GS.flags=GS.flags||{};
-        Object.keys(f).forEach(k=>{if(k==='cos'){GS.flags.cos=GS.flags.cos||{};String(f.cos).split('.').filter(Boolean).forEach(c=>GS.flags.cos[c]=1);}
+        Object.keys(f).forEach(k=>{if(k==='cos'||k==='mus'){GS.flags[k]=GS.flags[k]||{};String(f[k]).split('.').filter(Boolean).forEach(c=>GS.flags[k][c]=1);}
           else if(typeof f[k]==='number')GS.flags[k]=Math.max(+GS.flags[k]||0,f[k]);else if(f[k])GS.flags[k]=f[k];});}catch(e){}}
     });
     gSave();store.set('ate_votes',myVotes);store.set('ate_seen',seen);
@@ -2564,7 +2667,7 @@ const Game=(()=>{
       gamesOk:Object.values(GS.games).filter(g=>g.ok).length,flk:GS.flags.flk||0,etoile:GS.flags.etoile||0,uwu:!!GS.flags.uwu,tigre:GS.flags.tigre||0,devinko:!!GS.flags.devinko,sock:GS.flags.sock||0,pull:GS.flags.pull||0,wish:GS.flags.wish||0,gift:GS.flags.gift||0,hit:GS.flags.hit||0,bub:GS.flags.bub||0,bird:GS.flags.bird||0,roll:GS.flags.roll||0,glo:!!GS.flags.glo,sball:!!GS.flags.sball,
       found:Object.keys(GS.bonus).length,eggs:GS.eggs,streak:s.cur,best:s.best,streakBonus:s.bonus,
       we:Object.keys(GS.opened).filter(d=>GS.opened[d].on&&WEEKEND_DAYS.includes(+d)).length,
-      votes:Object.keys(myVotes).length,cheat:!!GS.flags.cheat,sulk:!!GS.flags.sulk,cat:!!GS.flags.cat,chif:!!(GS.games[5]&&GS.games[5].ok),quizOk:FIRST_DAYS.filter(d=>GS.games[d]&&GS.games[d].ok).length,skips:Object.values(GS.games).filter(g=>g.skip).length,xmas:!!(GS.opened[25]&&GS.opened[25].on),cos:Object.keys(GS.flags.cos||{}).length,lit:!!GS.flags.lit
+      votes:Object.keys(myVotes).length,cheat:!!GS.flags.cheat,sulk:!!GS.flags.sulk,cat:!!GS.flags.cat,chif:!!((GS.games[9]&&GS.games[9].ok)||GS.flags.chifwin),q42:!!GS.flags.q42,mus:Object.keys(GS.flags.mus||{}).length,air:!!(GS.flags.witch&&GS.flags.dragon),quizOk:FIRST_DAYS.filter(d=>GS.games[d]&&GS.games[d].ok).length,skips:Object.values(GS.games).filter(g=>g.skip).length,xmas:!!(GS.opened[25]&&GS.opened[25].on),cos:Object.keys(GS.flags.cos||{}).length,lit:!!GS.flags.lit
     };
   }
   function points(){
@@ -2575,48 +2678,51 @@ const Game=(()=>{
     p+=s.found*5;
     return p;
   }
+const RAR={rare:'Rare',leg:'Légendaire',uni:'Unique'};
   const BADGES=[
-    {id:'lt',n:'Lève-tôt',d:'Ouvrir la case du jour avant 8 h.',t:s=>s.early},
-    {id:'noc',n:'Noctambule',d:'Ouvrir la case du jour après 23 h.',t:s=>s.late},
-    {id:'we3',n:'Week-end studieux',d:'Ouvrir la case le jour J pendant 3 jours de week-end ou férié.',t:s=>s.we>=3},
-    {id:'we7',n:'Jamais en vacances',d:'Ouvrir les 7 cases des week-ends et du 25 le jour J.',t:s=>s.we>=7},
-    {id:'f3',n:'Étincelle',d:'3 jours de suite, ouverts le jour J.',t:s=>s.best>=3},
-    {id:'f7',n:'Flamme',d:'7 jours de suite.',t:s=>s.best>=7},
-    {id:'f15',n:'Brasier',d:'15 jours de suite.',t:s=>s.best>=15},
-    {id:'g5',n:'Cerveau',d:'Réussir 4 quiz ou jeux.',t:s=>s.gamesOk>=4},
-    {id:'g15',n:'Encyclopédie',d:'Réussir 8 quiz ou jeux.',t:s=>s.gamesOk>=8},
-    {id:'qz',n:'Quiz sans filet',d:'Réussir 3 quiz avant l\'anecdote.',t:s=>s.quizOk>=3},
-    {id:'sk',n:'Je lis directement',d:'Passer 3 quiz sans y répondre.',t:s=>s.skips>=3},
-    {id:'chif',n:'Maître du chifoumi',d:'Battre le bonhomme de neige à la case 5.',t:s=>s.chif},
-    {id:'fl10',n:'Attrape-flocons',d:'Attraper 10 gros flocons au vol.',t:s=>s.flk>=10},
-    {id:'fl50',n:'Collection d\'hiver',d:'Attraper 50 gros flocons.',t:s=>s.flk>=50},
-    {id:'bub',n:'Ramoneur·se',d:'La cheminée fait des bulles. Elles ne résistent pas longtemps.',h:1,t:s=>s.bub>=15},
-    {id:'glo',n:'Décorateur·rice',d:'Une guirlande bien assortie.',h:1,t:s=>s.glo},
-    {id:'wi',n:'Faiseur·se de vœux',d:'Quelque chose passe dans le ciel, la nuit.',h:1,t:s=>s.wish>=3},
-    {id:'gi',n:'Lutin du 24',d:'Le 24, lève les yeux.',h:1,t:s=>s.gift>=1},
-    {id:'hi',n:'Bataille de neige',d:'Lancer 5 flocons sur le bonhomme de neige.',t:s=>s.hit>=5},
-    {id:'so',n:'Père Noël secret',d:'Glisser 3 mots dans les chaussettes de la Table.',t:s=>s.sock>=3},
-    {id:'pu',n:'Styliste douteux·se',d:'Tricoter un pull moche pour le bonhomme.',t:s=>s.pull>=1},
-    {id:'uw',n:'uwu',d:'(˶ᵔ ᵕ ᵔ˶)',h:1,t:s=>s.uwu},
-    {id:'ti',n:'Tié un tigre',d:'Dire merci comme à Marseille.',t:s=>s.tigre>=1},
-    {id:'dv',n:'Plus fort·e que le devin',d:'Le bonhomme a mis un turban. Fais-le douter.',h:1,t:s=>s.devinko},
-    {id:'st',n:'Super étoile',d:'Tout en haut du palais de glace, quelque chose brille.',h:1,t:s=>s.etoile>=1},
-    {id:'oi',n:'Ornithologue',d:'Faire s\'envoler le rouge-gorge 5 fois.',t:s=>s.bird>=5},
-    {id:'sb',n:'Boule de neige géante',d:'Il suffit de la pousser. Beaucoup.',h:1,t:s=>s.sball},
-    {id:'v10',n:'Citoyen·ne de la Table',d:'Voter sur 10 cases.',t:s=>s.votes>=10},
-    {id:'v20',n:'Électeur·rice assidu·e',d:'Voter sur 20 cases.',t:s=>s.votes>=20},
-    {id:'fd',n:'Chasseur·se d\'étoiles',d:'Trouver 3 trésors cachés.',t:s=>s.found>=3},
-    {id:'fd5',n:'Tout trouvé',d:'Trouver les 5 trésors cachés.',t:s=>s.found>=5},
-    {id:'sn',n:'Ami·e du bonhomme',d:'Un peu de patience et beaucoup de clics.',h:1,t:s=>s.eggs>=15},
-    {id:'e50',n:'Tapoteur·se de neige',d:'Cliquer 50 fois sur les sapins et le bonhomme.',t:s=>s.eggs>=50},
-    {id:'sul',n:'Bouderie',d:'Le bonhomme a des limites.',h:1,t:s=>s.sulk},
-    {id:'cat',n:'Ami des chats',d:'Quelqu\'un te regarde, quelque part.',h:1,t:s=>s.cat},
-    {id:'lit',n:'Guirlande',d:'Allumer un sapin.',t:s=>s.lit},
-    {id:'gw',n:'Garde-robe complète',d:'Voir toutes les tenues du bonhomme de neige.',t:s=>s.cos>=Object.keys(OUTFITS).length},
-    {id:'dd',n:'Dandy',d:'Voir 10 tenues différentes du bonhomme.',t:s=>s.cos>=10},
-    {id:'ar',n:'Archiviste',d:'Ouvrir les 25 cases.',t:s=>s.opened>=25},
-    {id:'xm',n:'Joyeux Noël',d:'Ouvrir la case 25 le jour J.',t:s=>s.xmas},
-    {id:'ch',n:'Voyageur·se temporel·le',d:'Se faire démasquer par l\'anti-triche. On n\'en dira pas plus.',h:1,t:s=>s.cheat}
+    {id:'lt',v:1,n:'Lève-tôt',d:'Ouvrir la case du jour avant 8 h.',t:s=>s.early},
+    {id:'noc',v:1,n:'Noctambule',d:'Ouvrir la case du jour après 23 h.',t:s=>s.late},
+    {id:'we3',v:1,n:'Week-end studieux',d:'Ouvrir la case le jour J pendant 3 jours de week-end ou férié.',t:s=>s.we>=3},
+    {id:'we7',r:'leg',tier:3,n:'Jamais en vacances',d:'Ouvrir les 7 cases des week-ends et du 25 le jour J.',t:s=>s.we>=7},
+    {id:'f3',v:1,n:'Étincelle',d:'3 jours de suite, ouverts le jour J.',t:s=>s.best>=3},
+    {id:'f7',r:'rare',v:1,n:'Flamme',d:'7 jours de suite.',t:s=>s.best>=7},
+    {id:'f15',r:'leg',tier:3,n:'Brasier',d:'15 jours de suite.',t:s=>s.best>=15},
+    {id:'g5',v:1,n:'Cerveau',d:'Réussir 4 quiz ou jeux.',t:s=>s.gamesOk>=4},
+    {id:'g15',r:'leg',tier:3,n:'Encyclopédie',d:'Réussir 7 quiz ou jeux.',t:s=>s.gamesOk>=7},
+    {id:'qz',tier:1,n:'Quiz sans filet',d:'Réussir 3 quiz avant l\'anecdote.',t:s=>s.quizOk>=3},
+    {id:'sk',tier:1,n:'Je lis directement',d:'Passer 3 quiz sans y répondre.',t:s=>s.skips>=3},
+    {id:'chif',tier:1,n:'Maître du chifoumi',d:'Battre le bonhomme de neige à la case 9.',t:s=>s.chif},
+    {id:'fl10',tier:1,n:'Attrape-flocons',d:'Attraper 10 gros flocons au vol.',t:s=>s.flk>=10},
+    {id:'mel',r:'rare',tier:2,n:'Mélomane',d:'Lancer la musique sur 5 jours différents. Chaque jour a son morceau.',t:s=>s.mus>=5},
+    {id:'bub',tier:2,n:'Ramoneur·se',d:'La cheminée fait des bulles. Elles ne résistent pas longtemps.',t:s=>s.bub>=10},
+    {id:'glo',tier:2,n:'Décorateur·rice',d:'Une guirlande bien assortie.',t:s=>s.glo},
+    {id:'wi',r:'rare',tier:2,n:'Faiseur·se de vœux',d:'Quelque chose passe dans le ciel, la nuit.',t:s=>s.wish>=3},
+    {id:'gi',r:'rare',tier:3,n:'Lutin du 24',d:'Le 24, lève les yeux.',t:s=>s.gift>=1},
+    {id:'hi',tier:1,n:'Bataille de neige',d:'Lancer 5 flocons sur le bonhomme de neige.',t:s=>s.hit>=5},
+    {id:'so',v:1,n:'Père Noël secret',d:'Glisser 3 mots dans les chaussettes de la Table.',t:s=>s.sock>=3},
+    {id:'pu',tier:1,n:'Styliste douteux·se',d:'Tricoter un pull moche pour le bonhomme.',t:s=>s.pull>=1},
+    {id:'uw',r:'rare',tier:2,n:'uwu',d:'La lune est timide. Insiste. (˶ᵔ ᵕ ᵔ˶)',t:s=>s.uwu},
+    {id:'ti',tier:2,n:'Tié un tigre',d:'Dire merci comme à Marseille.',t:s=>s.tigre>=1},
+    {id:'dv',r:'rare',tier:3,n:'Plus fort·e que le devin',d:'Le bonhomme a mis un turban. Fais-le douter.',t:s=>s.devinko},
+    {id:'st',r:'rare',tier:3,n:'Super étoile',d:'Tout en haut du palais de glace, quelque chose brille.',t:s=>s.etoile>=1},
+    {id:'oi',tier:1,n:'Ornithologue',d:'Faire s\'envoler le rouge-gorge 5 fois.',t:s=>s.bird>=5},
+    {id:'sb',r:'rare',tier:3,n:'Boule de neige géante',d:'Il suffit de la pousser. Beaucoup.',t:s=>s.sball},
+    {id:'v10',v:1,n:'Citoyen·ne de la Table',d:'Voter sur 10 cases.',t:s=>s.votes>=10},
+    {id:'v20',r:'rare',tier:2,n:'Électeur·rice assidu·e',d:'Voter sur 18 cases.',t:s=>s.votes>=18},
+    {id:'fd',tier:2,n:'Chasseur·se d\'étoiles',d:'Trouver 3 trésors cachés.',t:s=>s.found>=3},
+    {id:'fd5',r:'leg',tier:3,n:'Tout trouvé',d:'Trouver les 5 trésors cachés.',t:s=>s.found>=5},
+    {id:'sn',tier:1,n:'Ami·e du bonhomme',d:'Un peu de patience et beaucoup de clics.',t:s=>s.eggs>=15},
+    {id:'e50',tier:2,n:'Tapoteur·se de neige',d:'Cliquer 50 fois sur les sapins et le bonhomme.',t:s=>s.eggs>=50},
+    {id:'sul',tier:1,n:'Bouderie',d:'Le bonhomme a des limites.',t:s=>s.sulk},
+    {id:'cat',r:'rare',tier:3,n:'Ami des chats',d:'Quelqu\'un te regarde, quelque part.',t:s=>s.cat},
+    {id:'lit',tier:1,n:'Guirlande',d:'Allumer un sapin.',t:s=>s.lit},
+    {id:'gw',r:'leg',tier:3,n:'Garde-robe complète',d:'Voir toutes les tenues du bonhomme de neige.',t:s=>s.cos>=Object.keys(OUTFITS).length},
+    {id:'dd',tier:2,n:'Dandy',d:'Voir 10 tenues différentes du bonhomme.',t:s=>s.cos>=10},
+    {id:'ar',v:1,n:'Archiviste',d:'Ouvrir les 25 cases.',t:s=>s.opened>=25},
+    {id:'xm',r:'rare',v:1,n:'Joyeux Noël',d:'Ouvrir la case 25 le jour J.',t:s=>s.xmas},
+    {id:'ch',bonus:1,n:'Voyageur·se temporel·le',d:'Se faire démasquer par l\'anti-triche. On n\'en dira pas plus.',t:s=>s.cheat},
+    {id:'air',r:'rare',tier:1,n:'Contrôle aérien',d:'Deux drôles de passagers survolent le village. Salue-les tous les deux.',t:s=>s.air},
+    {id:'q42',r:'uni',n:'La grande réponse',d:'Six fois sept. Évidemment.',t:s=>s.q42}
   ];
   function pointsBreakdown(){
     const st=stats();let open=0,we=0,miniP=0;
@@ -2634,8 +2740,64 @@ const Game=(()=>{
   function checkBadges(silent){
     const s=stats();const fresh=BADGES.filter(b=>b.t(s)&&!GS.bseen[b.id]);
     fresh.forEach(b=>GS.bseen[b.id]=1);
-    if(fresh.length){gSave();if(!silent)setTimeout(()=>{toast('Badge débloqué : '+fresh.map(b=>b.n).join(', '));confetti();},900);}
+    if(fresh.length){gSave();if(!silent)setTimeout(()=>{fresh.forEach(b=>cardQueue.push(b));nextCard();},900);}
     renderGbar();
+    if(q42Ready(s)&&!GS.flags.q42&&!GS.flags.q42a){GS.flags.q42a=1;gSave();setTimeout(askQ42,2600);}
+  }
+  /* carte de badge : agrandie, inclinable, reflets selon la rareté */
+  let cardRaf=0,cardLast=0;
+  function showCard(d){
+    if(!d.classList.contains('on')){d.classList.remove('nope');void d.offsetWidth;d.classList.add('nope');const r=d.getBoundingClientRect();plus(r.left+r.width/2,r.top+8,pick(['Pas encore…','Bientôt, peut-être.','Ce badge se fait désirer.']));Music.blip(180,.08,'square',.04);return;}
+    openCard(BADGES.find(x=>x.id===d.dataset.id)||{},false);
+  }
+  function nwText(e,str){const re=/(\([^)]*\)|[^\s]*[-·'][^\s]*)/g;let last=0,m;e.textContent='';
+    while((m=re.exec(str))){if(!m[0]){re.lastIndex++;continue;}if(m.index>last)e.appendChild(document.createTextNode(str.slice(last,m.index)));const sp=document.createElement('span');sp.className='nw';sp.textContent=m[0];e.appendChild(sp);last=m.index+m[0].length;}
+    if(last<str.length)e.appendChild(document.createTextNode(str.slice(last)));return e;}
+  const cardQueue=[];
+  function nextCard(){const cv=document.getElementById('cardview');if(cv&&cv.classList.contains('open'))return;const b=cardQueue.shift();if(b)openCard(b,true);}
+  function openCard(b,isNew){
+    let cv=document.getElementById('cardview');
+    if(!cv){cv=el('div','');cv.id='cardview';cv.setAttribute('role','dialog');cv.setAttribute('aria-modal','true');cv.setAttribute('aria-label','Badge');document.body.appendChild(cv);
+      const close=()=>{cv.classList.remove('open');cancelAnimationFrame(cardRaf);if(cardQueue.length)setTimeout(nextCard,350);};
+      cv.addEventListener('click',e=>{if(e.target===cv||e.target.closest('.cvclose'))close();});
+      document.addEventListener('keydown',e=>{if(e.key==='Escape'&&cv.classList.contains('open')){e.stopImmediatePropagation();close();}},true);
+      const tilt=(x,y)=>{const c=cv.querySelector('.bigcard');if(!c)return;const r=c.getBoundingClientRect();
+        const px=Math.max(0,Math.min(1,(x-r.left)/r.width)),py=Math.max(0,Math.min(1,(y-r.top)/r.height));setTilt(c,px,py);};
+      cv.addEventListener('pointermove',e=>{cardLast=Date.now();tilt(e.clientX,e.clientY);});
+      cv.addEventListener('pointerdown',e=>{cardLast=Date.now();tilt(e.clientX,e.clientY);});}
+    const r=b.bonus?'bonus':(b.r||'com');
+    const glyph={com:'★',rare:'✦',leg:'❖',uni:'42',bonus:'⌛'}[r];
+    cv.innerHTML='';const x=txt('button','cvclose','×');x.type='button';x.setAttribute('aria-label','Fermer');cv.appendChild(x);
+    const c=el('div','bigcard rc-'+r);
+    c.innerHTML='<div class="cfx"></div><div class="glare"></div>';
+    c.appendChild(txt('i','ctag',b.bonus?'Bonus':(RAR[b.r]||'Classique')));
+    if(isNew){cv.appendChild(txt('p','cvnew',(r==='com'?'Badge débloqué !':r==='bonus'?'Badge bonus débloqué !':'Badge '+RAR[b.r].toLowerCase()+' débloqué !')+(cardQueue.length?' (encore '+cardQueue.length+')':'')));}
+    c.appendChild(txt('div','cglyph',glyph));c.appendChild(nwText(el('b',''),b.n||''));c.appendChild(nwText(el('span',''),b.d||''));
+    c.appendChild(txt('em','cfoot','Calendrier de la Table · 2026'));
+    cv.appendChild(c);cv.classList.add('open');setTilt(c,.5,.5);x.focus({preventScroll:true});
+    Music.arp(r==='com'?[72,79]:r==='rare'?[72,76,79,84]:[72,76,79,84,88,91]);
+    if(isNew){confetti();if(r!=='com')setTimeout(confetti,350);if(r==='leg'||r==='uni')setTimeout(confetti,700);}else if(r==='leg'||r==='uni')confetti();
+    cardLast=0;const t0=performance.now();
+    const idle=t=>{if(!cv.classList.contains('open'))return;if(Date.now()-cardLast>1500&&!RM()){const k=(t-t0)/1000;setTilt(c,.5+.32*Math.sin(k*1.1),.5+.25*Math.sin(k*.8+1));}cardRaf=requestAnimationFrame(idle);};
+    cancelAnimationFrame(cardRaf);cardRaf=requestAnimationFrame(idle);
+  }
+  function setTilt(c,px,py){c.style.setProperty('--rx',((.5-py)*26).toFixed(2)+'deg');c.style.setProperty('--ry',((px-.5)*30).toFixed(2)+'deg');
+    c.style.setProperty('--gx',(px*100).toFixed(1)+'%');c.style.setProperty('--gy',(py*100).toFixed(1)+'%');c.style.setProperty('--px',((px-.5)*2).toFixed(3));c.style.setProperty('--py',((py-.5)*2).toFixed(3));}
+  function q42Ready(s){s=s||stats();return BADGES.filter(b=>b.id!=='ch'&&b.id!=='q42').every(b=>b.t(s));}
+  function askQ42(){
+    if(document.body.classList.contains('ov')){setTimeout(askQ42,2000);return;}
+    const n=el('div','q42box');
+    n.appendChild(txt('span','badge','42'));
+    n.appendChild(txt('h2','','La grande réponse'));
+    n.appendChild(txt('p','qtext','Vous connaissez déjà la réponse. Qu\'êtes-vous ensemble ?'));
+    const inp=document.createElement('input');inp.type='text';inp.className='q42in';inp.autocomplete='off';inp.setAttribute('aria-label','Ta réponse');
+    const out=txt('p','note','');const ok=txt('button','btn','Répondre');ok.type='button';
+    const norm=v=>v.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z' ]/g,' ').replace(/\b(le|la|les|l'|des|de|un|une|nous|on|est|sommes|etes|vous)\b|^l'/g,' ').replace(/'/g,' ').replace(/\s+/g,' ').trim();
+    const go=()=>{const v=norm(inp.value);
+      if(v==='conclave'||v==='amis'||v==='ami'||v==='amies'||v==='amie'){GS.flags.q42=1;gSave();$('#carnet').classList.remove('open');checkBadges(true);Music.arp([60,64,67,72,76,79,84]);openCard(BADGES.find(x=>x.id==='q42'),true);setTimeout(()=>toast('42 sur 42. La Table est complète.'),900);}
+      else{out.textContent=pick(['Hmm. Ce n\'est pas ce que la Table a en tête.','Presque… non, pas du tout en fait.','Le bonhomme secoue la tête. Il n\'a pas de cou, mais il le fait quand même.','Indice : regarde autour de la table.']);inp.select();}};
+    ok.addEventListener('click',go);inp.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+    n.appendChild(inp);n.appendChild(ok);n.appendChild(out);openSheet(n);setTimeout(()=>inp.focus(),80);
   }
   function missedDays(){const o=[];for(let d=1;d<Math.min(todayNum,25);d++)if(!GS.opened[d])o.push(d);return o;}
   function renderMissed(){
@@ -2763,10 +2925,19 @@ const Game=(()=>{
     n.appendChild(meta);
     n.appendChild(txt('h3','sect','D\'où viennent mes points'));
     const bd=el('div','pbreak');pointsBreakdown().forEach(([a,b])=>{const r=el('div','pb');r.appendChild(txt('span','',a));r.appendChild(txt('b','',b));bd.appendChild(r);});n.appendChild(bd);
-    n.appendChild(txt('h3','sect','Badges ('+BADGES.filter(b=>b.t(s)).length+' / '+BADGES.length+')'));
+    const main=BADGES.filter(b=>!b.bonus);
+    n.appendChild(txt('h3','sect','Badges ('+main.filter(b=>b.t(s)).length+' / '+main.length+')'));
+    if(q42Ready(s)&&!GS.flags.q42){const qb=txt('button','btn q42btn','Une question vous attend…');qb.type='button';qb.addEventListener('click',askQ42);n.appendChild(qb);}
+    const tierDay={1:10,2:17,3:24};
     const grid=el('div','bdgs');
-    BADGES.forEach(b=>{const on=b.t(s);const d=el('div','bdg'+(on?' on':''));d.appendChild(txt('b','',(on||b.id!=='ch')?b.n:'???'));d.appendChild(txt('span','',(b.h&&!on)?'???':b.d));grid.appendChild(d);});
+    const order=[...BADGES.filter(b=>b.v),...BADGES.filter(b=>!b.v&&b.t(s)&&!b.bonus),...BADGES.filter(b=>!b.v&&!b.t(s)&&!b.bonus),...BADGES.filter(b=>b.bonus)];
+    order.forEach(b=>{const on=b.t(s);const leg=on||b.v||(b.tier&&todayNum>=tierDay[b.tier]);
+      const d=el('div','bdg'+(on?' on':'')+(b.bonus?' bonus':'')+(!b.v&&!on?' hid':'')+(b.r?' r-'+b.r:''));d.dataset.id=b.id;
+      if(b.bonus)d.appendChild(txt('i','btag','Bonus'));else if(b.r)d.appendChild(txt('i','btag',RAR[b.r]));
+      d.appendChild(nwText(el('b',''),(on||b.v)?b.n:'???'));d.appendChild(nwText(el('span',''),leg?b.d:'???'));grid.appendChild(d);});
+    grid.addEventListener('click',e=>{const d=e.target.closest('.bdg');if(d)showCard(d);});
     n.appendChild(grid);
+    if(!s.cheat)n.appendChild(txt('p','note','Les badges « ??? » sont des succès cachés : leurs indices se dévoilent le 10, le 17 et le 24 décembre.'));
     const ic=gcalLink('Ajouter un rappel quotidien à 9 h dans Google Agenda');ic.style.display='inline-block';ic.style.marginTop='14px';n.appendChild(ic);
     const fnd=BONUS.filter(b=>GS.bonus[b.n]);
     n.appendChild(txt('h3','sect','Trésors cachés'));
@@ -2829,7 +3000,7 @@ const Game=(()=>{
     h.style.setProperty('--pos',String(d?(d-1)/24:0.5));
     const o=OUTFITS[d];if(o){h.dataset.cos=o.c;seenCos(o.c);}
     Music.setTrack(TRACK_BY_DAY[d]||'base');
-    if(d===18)setTimeout(()=>placeCat(h),600);
+    if(d===18||(d>18&&d<=25&&Math.random()<.35))setTimeout(()=>placeCat(h),600);
     trainSync(h);
     new MutationObserver(()=>trainSync(h)).observe(h,{attributes:true,attributeFilter:['data-cos']});
     if(d>=1&&d<=25&&store.get('ate_snowday',0)!==d){
@@ -2869,13 +3040,14 @@ const Game=(()=>{
   function toy(k){GS.flags[k]=(GS.flags[k]||0)+1;gSave();checkBadges();return GS.flags[k];}
   function flag(k,v){if(v===undefined)return GS.flags[k];GS.flags[k]=v;gSave();checkBadges();return v;}
   function eggClick(h){GS.eggs++;gSave();if(h&&h.classList.contains('lit')){GS.flags.lit=1;gSave();}checkBadges();}
+  function musDay(){const d=todayNum;if(d<1||d>25)return;GS.flags.mus=GS.flags.mus||{};if(!GS.flags.mus[d]){GS.flags.mus[d]=1;gSave();checkBadges();}}
   function setSulk(){if(GS.flags.sulk)return;GS.flags.sulk=1;gSave();checkBadges();}
   function setLit(){GS.flags.lit=1;gSave();checkBadges();}
   function setCheat(){GS.flags.cheat=1;gSave();checkBadges();}
 
   /* formats spéciaux */
   function special(x){
-    const f={5:chifoumi,10:simon,13:bike,18:torch,20:tasting}[x.d];
+    const f={9:chifoumi,10:simon,14:bike,15:tasting,18:torch}[x.d];
     return f?f():document.createDocumentFragment();
   }
   function chifoumi(){
@@ -2888,12 +3060,14 @@ const Game=(()=>{
     duel.appendChild(you);duel.appendChild(sep);duel.appendChild(bot);
     const row=el('div','row');const msg=txt('p','qtext','Prêt ?');const score=txt('p','note','Toi 0 · Bonhomme 0');
     let me_=0,bo=0,over=false,busy=false;
-    const done=GS.games[5];
-    if(done){msg.textContent=done.ok?'Déjà gagné. Bien joué.':'Déjà joué. Le bonhomme t\'a eu.';}
+    const done=GS.games[9];let rematch=!!(done&&!done.ok&&!GS.flags.chifwin);
+    if(done){msg.textContent=(done.ok||GS.flags.chifwin)?'Déjà gagné. Bien joué.':'Le bonhomme t\'a eu la première fois. Revanche ? (Pour l\'honneur et le badge : pas de points en plus.)';}
+    const again=txt('button','btn ghost','Rejouer');again.type='button';again.hidden=true;
+    again.addEventListener('click',()=>{me_=0;bo=0;over=false;again.hidden=true;score.textContent='Toi 0 · Bonhomme 0';msg.textContent='Revanche. Il fait semblant de ne pas avoir peur.';you.classList.remove('win');bot.classList.remove('win');});
     names.forEach((nm,i)=>{
       const b=txt('button','btn chifb',emo[i]+' '+nm);b.type='button';b.setAttribute('aria-label',nm);
       b.addEventListener('click',()=>{
-        if(over||done||busy)return;busy=true;
+        if(over||busy||(done&&!rematch))return;busy=true;
         const c=Math.floor(Math.random()*3);
         you.textContent='✊';bot.textContent='✊';duel.classList.remove('shake');void duel.offsetWidth;duel.classList.add('shake');
         msg.textContent='Chi… fou… mi !';
@@ -2906,15 +3080,18 @@ const Game=(()=>{
           score.textContent='Toi '+me_+' · Bonhomme '+bo;
           if(me_===2||bo===2){
             over=true;const ok=me_===2;
-            GS.games[5]={pick:i,ok};gSave();emit('j5',ok?'ok':'ko');
-            msg.textContent+=ok?' Tu as battu le bonhomme !':' Le bonhomme gagne. Il est insupportable.';
-            gain(ok?'Victoire ! +3 pts':'Perdu, mais +1 pt pour avoir joué');
+            if(!GS.games[9]){GS.games[9]={pick:i,ok};gSave();emit('j9',ok?'ok':'ko');
+              msg.textContent+=ok?' Tu as battu le bonhomme !':' Le bonhomme gagne. Il est insupportable.';
+              gain(ok?'Victoire ! +3 pts':'Perdu, mais +1 pt pour avoir joué');
+              if(!ok){rematch=true;again.hidden=false;}}
+            else if(ok){GS.flags.chifwin=1;gSave();rematch=false;msg.textContent+=' Revanche gagnée ! Le bonhomme fait semblant de s\'en moquer.';checkBadges();}
+            else{msg.textContent+=' Encore perdu. Il est en feu.';again.hidden=false;}
           }
         },RM()?50:900);
       });
       row.appendChild(b);
     });
-    box.appendChild(duel);box.appendChild(lab);box.appendChild(row);box.appendChild(msg);box.appendChild(score);return box;
+    box.appendChild(duel);box.appendChild(lab);box.appendChild(row);box.appendChild(msg);box.appendChild(score);box.appendChild(again);if(rematch)again.hidden=true;return box;
   }
   function simon(){
     const box=el('div','special');
@@ -2977,7 +3154,7 @@ const Game=(()=>{
       ['Il porte un nuage de crème fouettée.',0],
       ['Pas de pâte de cacao : du beurre de cacao, du sucre, du lait. Couleur ivoire.',3]
     ];
-    const done=GS.games[20];
+    const done=GS.games[15];
     const sels=[];
     CL.forEach(([c,a],i)=>{
       const row=el('div','trow');row.appendChild(txt('span','',(i+1)+'. '+c));
@@ -2994,7 +3171,7 @@ const Game=(()=>{
       const used=new Set(sels.map(x=>x.value));
       if(used.size<4){out.textContent='Chaque recette ne sert qu\'une fois.';return;}
       const n=CL.filter((c,i)=>+sels[i].value===c[1]).length;const ok=n===4;
-      GS.games[20]={pick:n,ok};gSave();emit('j20',ok?'ok':'ko');
+      GS.games[15]={pick:n,ok};gSave();emit('j15',ok?'ok':'ko');
       sels.forEach((x,i)=>{x.disabled=true;x.value=String(CL[i][1]);});
       btn.hidden=true;
       out.textContent=ok?'Quatre sur quatre. Palais d\'or.':n+' sur 4. Les bonnes réponses sont affichées.';
@@ -3021,7 +3198,7 @@ const Game=(()=>{
     bb.addEventListener('click',()=>{alert(BONUS.map(b=>'Case '+b.day+' ('+b.title+') : '+b.text).join('\n\n'));});
     p.appendChild(sel);p.appendChild(dm);p.appendChild(bb);p.appendChild(rs);document.body.appendChild(p);
   }
-  return{openSheet,streakNow:()=>streakInfo().cur,syncFromSheet,pushSnapshot,toy,flag,isWE,testPanel,init,emit,flush,onOpen,onVote,gameBlock,teaserBlock,special,rankingEl,tryBonus,lockClick,eggClick,setSulk,nextCostume,setCheat,setLit,isFirst,gameDone,demoFill,renderGbar,markLock,checkBadges};
+  return{openSheet,streakNow:()=>streakInfo().cur,syncFromSheet,pushSnapshot,toy,flag,isWE,testPanel,init,emit,flush,onOpen,onVote,gameBlock,teaserBlock,special,rankingEl,tryBonus,lockClick,eggClick,setSulk,nextCostume,setCheat,setLit,isFirst,gameDone,demoFill,renderGbar,markLock,checkBadges,askQ42,musDay};
 })();
 
 (async function init(){
