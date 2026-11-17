@@ -412,9 +412,9 @@ body.sky-jour .aurora{opacity:.2}
   filter:drop-shadow(0 0 6px #ffe9a8);transform:rotate(calc(var(--dir)*14deg));animation:sstar 2.2s linear forwards}
 .sstar::after{content:"";position:absolute;inset:-14px -6px}
 @keyframes sstar{to{translate:calc(var(--dir)*115vw) 22vh}}
-.sleigh{position:absolute;top:9vh;left:-240px;width:220px;padding:0;border:0;background:none;cursor:pointer;pointer-events:auto;animation:sleigh 10s linear forwards}
+.sleigh{position:absolute;top:9vh;left:-320px;width:300px;padding:0;border:0;background:none;cursor:pointer;pointer-events:auto;animation:sleigh 10s linear forwards}
 .sleigh svg{display:block;width:100%;height:auto;animation:fbob 1.2s ease-in-out infinite}
-@keyframes sleigh{to{translate:calc(100vw + 260px) 8vh}}
+@keyframes sleigh{to{translate:calc(100vw + 340px) 8vh}}
 @keyframes fbob{50%{transform:translateY(-6px) rotate(-2deg)}}
 .gift{position:fixed;z-index:45;width:24px;height:24px;border:3px solid var(--ink-d);border-radius:4px;background:linear-gradient(90deg,transparent 40%,var(--gold) 40% 60%,transparent 60%),var(--pine);pointer-events:none;animation:gift 1.3s ease-in forwards}
 @keyframes gift{to{translate:0 45vh;rotate:200deg}}
@@ -821,9 +821,11 @@ body.ov .flame,body.locked .flame{display:none}
 .jolwrap .jeye{transform-box:fill-box;transform-origin:50% 50%}
 @keyframes jblink{50%{transform:scaleY(.08)}}
 @keyframes jolIn{from{opacity:0}}
-.jolhit{position:fixed;z-index:2;padding:0;border:0;background:none;cursor:pointer;border-radius:40%}
-.folksay{white-space:normal!important;background:rgba(20,12,46,.82);padding:8px 14px;border-radius:14px;border:2px solid rgba(255,207,92,.6);font-family:var(--font-display);width:max-content;max-width:min(80vw,320px);font-size:1.05rem!important;line-height:1.3;text-align:center;transform:translate(-50%,0)!important;animation:folksay 6s ease-out forwards!important}
-@keyframes folksay{0%{opacity:0;margin-top:6px}8%{opacity:1;margin-top:0}85%{opacity:1}100%{opacity:0}}
+.cat.roofcat{z-index:5}
+.jolhit{position:fixed;z-index:29;padding:0;border:0;background:none;cursor:pointer;border-radius:40%}
+.sock.wiggle svg{animation:sockwig .9s ease-in-out}@keyframes sockwig{20%{transform:rotate(-14deg)}45%{transform:rotate(11deg)}70%{transform:rotate(-6deg)}}
+.folksay{white-space:normal!important;background:rgba(20,12,46,.82);padding:8px 14px;border-radius:14px;border:2px solid rgba(255,207,92,.6);font-family:var(--font-display);width:max-content;max-width:min(80vw,320px);font-size:1.05rem!important;line-height:1.3;text-align:center;transform:translate(-50%,0)!important;animation:folksay var(--d,10s) ease-out forwards!important}
+@keyframes folksay{0%{opacity:0;margin-top:6px}5%{opacity:1;margin-top:0}92%{opacity:1}100%{opacity:0}}
 @media (prefers-reduced-motion: reduce){.arie.go{animation-duration:9s}.lucie .lflames,.arie .lanflame,.arie.go .ariesvg{animation:none}}
 /* ---- chaussette qui brille le 24 ---- */
 .sock.tarot svg{filter:drop-shadow(0 0 6px #ffe27a) drop-shadow(0 0 14px #ffb12e)}
@@ -847,6 +849,11 @@ body.ov .flame,body.locked .flame{display:none}
 .tarot .tmsg{margin:0;min-height:1.2em;font:700 .85rem Nunito,system-ui,sans-serif;color:#ffe9a8;text-align:center}
 .tarot .tstage .lbl{top:4vh;padding:0 56px;font-family:var(--font-display)!important;font-weight:400!important}
 @media (max-height:720px){.tarot .tstage .rise{width:min(62vw,220px)}}
+@media (max-width:560px){.sleigh{width:210px;left:-230px}}
+
+/* avant le 1er décembre : les jouets dorment */
+body.pre #sball{display:none}
+body.pre #bird,body.pre #garl .bulb,body.pre .smoke,body.pre .chim-hit{pointer-events:none;cursor:default}
 
 </style>
 </head>
@@ -1093,7 +1100,7 @@ const DAYS=[
  <p>Disney y réfléchissait depuis des décennies. Le film de 2013 s'en inspire librement et a changé l'essentiel : deux sœurs, des chansons, et la glace comme pouvoir plutôt que comme malédiction.</p>
  <p class="tip">Et les chansons ? <em>Libérée, délivrée</em> est devenue un tube mondial, doublé en dizaines de langues.</p>`,
  links:[[`Le Petit Journal Copenhague : La Reine des neiges et Andersen`,`https://lepetitjournal.com/copenhague/frozen-reine-neiges-andersen-271594`],[`D23 : les films Disney tirés de livres pour enfants`,`https://d23.com/disney-films-that-started-out-as-childrens-books/`]],
- qs:[{id:'23',kind:'choice',text:`Au karaoké, tu prends…`,options:[`Disney`,`EPIC`,`Les deux en medley`,`Karaoké ? Jamais`]}]},
+ qs:[{id:'23',kind:'choice',text:`Au karaoké, tu prends…`,options:[`Disney`,`EPIC`,`Les deux en medley`,`Les tubes des années 80`,`La variété française (Goldman, Céline…)`,`Un générique de dessin animé`,`Du métal, à fond`,`Toutes les musiques dont je ne connais pas la langue`,`Je fais les chœurs`,`Karaoké ? Jamais`]}]},
 
 {d:24,type:'histoire',noel:true,
  title:`La trêve de Noël 1914`,
@@ -1356,7 +1363,12 @@ if(new URLSearchParams(location.search).get('effacer')==='1'){
   try{Object.keys(localStorage).filter(k=>k.startsWith('ate_')||k.startsWith('test_')).forEach(k=>localStorage.removeItem(k));}catch(e){}
   location.replace(location.pathname);
 }
-const pick=a=>a[Math.floor(Math.random()*a.length)];
+/* tirage au hasard sans jamais répéter deux fois de suite (et sans repasser par une phrase avant d'avoir dit toutes les autres) */
+const _decks={};
+const pick=a=>{if(!a||a.length<2)return a&&a[0];const k=a.length+'\u0001'+a.join('\u0001');let d=_decks[k];
+  if(!d||!d.q.length){const q=a.map((_,i)=>i);for(let i=q.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[q[i],q[j]]=[q[j],q[i]];}
+    const last=d?d.last:-1;if(q[q.length-1]===last)[q[0],q[q.length-1]]=[q[q.length-1],q[0]];d=_decks[k]={q,last};}
+  const i=d.q.pop();d.last=i;return a[i];};
 function parisYMD(ms){return new Intl.DateTimeFormat('en-CA',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(ms));}
 
 /* ---------- état ---------- */
@@ -1425,11 +1437,11 @@ function toast(msg,isCheat){const cv=document.getElementById('cardview');if(cv&&
 const LOCK_SVG='<svg class="lock" viewBox="0 0 24 24" fill="#ffcf5c" stroke="#2b1b3d" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none"/><circle cx="12" cy="16" r="1.4" fill="#2b1b3d" stroke="none"/></svg>';
 const PIC_OPEN='<svg class="pic" viewBox="0 0 48 48" aria-hidden="true"><g stroke="#2b1b3d" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">';
 const PICS={
-  histoire:PIC_OPEN+'<rect x="11" y="9" width="26" height="30" rx="3" fill="#f6e3b4"/><ellipse cx="24" cy="9" rx="15" ry="4.5" fill="#e8c77f"/><ellipse cx="24" cy="40" rx="15" ry="4.5" fill="#e8c77f"/><circle cx="19" cy="23" r="2" fill="#2b1b3d"/><circle cx="29" cy="23" r="2" fill="#2b1b3d"/><path d="M19 30q5 4 10 0" fill="none"/></g></svg>',
+  histoire:PIC_OPEN+'<path d="M24 14q-8-5-18-3v26q10-2 18 3q8-5 18-3V11q-10-2-18 3z" fill="#fff6e0"/><path d="M24 14v26" fill="none"/><path d="M10 18q5-1 10 1M10 23q5-1 10 1M10 28q5-1 10 1M28 19q5-2 10-1M28 24q5-2 10-1M28 29q5-2 10-1" fill="none" stroke-width="1.6"/><path d="M33 9v13l3-3 3 3V9z" fill="#e5484d" stroke-width="2"/><path d="M14 6l1 2.5 2.5 1-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z" fill="#ffcf5c" stroke-width="1.4"/></g></svg>',
   apprends:PIC_OPEN+'<path d="M24 3v4M8 11l3 3M40 11l-3 3" fill="none"/><circle cx="24" cy="21" r="12" fill="#ffe66d"/><rect x="19" y="32" width="10" height="8" rx="2" fill="#b9c2d0"/><circle cx="19" cy="20" r="2" fill="#2b1b3d"/><circle cx="29" cy="20" r="2" fill="#2b1b3d"/><path d="M19 26q5 4 10 0" fill="none"/></g></svg>',
   test:PIC_OPEN+'<rect x="9" y="9" width="30" height="30" rx="7" fill="#fff" transform="rotate(-8 24 24)"/><g fill="#2b1b3d" stroke="none" transform="rotate(-8 24 24)"><circle cx="17" cy="17" r="2.6"/><circle cx="31" cy="17" r="2.6"/><circle cx="24" cy="24" r="2.6"/><circle cx="17" cy="31" r="2.6"/><circle cx="31" cy="31" r="2.6"/></g></g></svg>',
-  site:PIC_OPEN+'<path d="M12 41V22a12 12 0 0 1 24 0v19l-4-3-4 3-4-3-4 3-4-3z" fill="#fff"/><circle cx="19" cy="22" r="2.2" fill="#2b1b3d"/><circle cx="29" cy="22" r="2.2" fill="#2b1b3d"/><ellipse cx="24" cy="30" rx="3" ry="3.4" fill="#2b1b3d"/></g></svg>',
-  univers:PIC_OPEN+'<path d="M13 21L11 8l9 7zM35 21l2-13-9 7z" fill="#ffcf5c"/><ellipse cx="24" cy="28" rx="15" ry="13" fill="#5fc27a"/><ellipse cx="24" cy="33" rx="8" ry="5.5" fill="#a6e3a1"/><circle cx="18" cy="24" r="3" fill="#fff"/><circle cx="30" cy="24" r="3" fill="#fff"/><circle cx="18.6" cy="24.4" r="1.2" fill="#2b1b3d" stroke="none"/><circle cx="29.4" cy="24.4" r="1.2" fill="#2b1b3d" stroke="none"/><circle cx="21" cy="32" r="1" fill="#2b1b3d"/><circle cx="27" cy="32" r="1" fill="#2b1b3d"/></g></svg>',
+  site:PIC_OPEN+'<path d="M12 44h24l-3-7H15z" fill="#a0673f"/><circle cx="24" cy="22" r="15" fill="#cdeeff"/><path d="M11 28q13 4 26 0v2a15 15 0 0 1-26 0z" fill="#fff"/><path d="M19 28v-7l5-4 5 4v7z" fill="#e5484d"/><path d="M23 28v-4h2v4" fill="#ffcf5c" stroke-width="1.5"/><g fill="#fff" stroke="none"><circle cx="16" cy="15" r="1.3"/><circle cx="30" cy="12" r="1.3"/><circle cx="33" cy="20" r="1.1"/><circle cx="21" cy="11" r="1"/></g><path d="M17 12q3-4 8-4" fill="none" stroke="#fff" stroke-width="2"/></g></svg>',
+  univers:PIC_OPEN+'<path d="M8 26q0-8 8-8h16q8 0 8 8l2 10q1 6-5 6-4 0-6-5H17q-2 5-6 5-6 0-5-6z" fill="#7a6cf0"/><path d="M15 25v8M11 29h8" fill="none" stroke="#fff" stroke-width="2.5"/><circle cx="31" cy="27" r="2.2" fill="#ffcf5c"/><circle cx="36" cy="31" r="2.2" fill="#e5484d"/><path d="M16 18q4-14 18-10l4 10z" fill="#e5484d"/><path d="M14 18h24" stroke="#fff" stroke-width="5"/><circle cx="38" cy="8" r="3" fill="#fff"/></g></svg>',
   finale:PIC_OPEN+'<path d="M24 4l6 13 14 1.5-10.5 9.5 3 14L24 34.5 11.5 42l3-14L4 18.5 18 17z" fill="#ffcf5c"/><circle cx="19.5" cy="24" r="1.9" fill="#2b1b3d"/><circle cx="28.5" cy="24" r="1.9" fill="#2b1b3d"/><path d="M20 30q4 3.5 8 0" fill="none"/></g></svg>'
 };
 function renderGrid(){
@@ -2091,7 +2103,7 @@ function bubble(host,ground,msg){
   const lo=8-gl+bw/2,hi=document.documentElement.clientWidth-8-gl-bw/2;
   b.style.left=Math.max(lo,Math.min(hi,gx))+'px';
   b.style.bottom=(ground.clientHeight-host.offsetTop+6)+'px';
-  const dur=Math.max(9500,6000+msg.length*70);
+  const dur=Math.max(10000,3500+msg.length*90);
   b.style.setProperty('--d',dur+'ms');
   b.classList.remove('show');void b.offsetWidth;b.classList.add('show');
   clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove('show'),dur);
@@ -2246,7 +2258,7 @@ function setupFlakes(){
   const box=$('#toys');if(!box||RM())return;
   const live=[];
   function spawn(){
-    if(document.hidden||document.body.classList.contains('ov')||live.length>=3)return;
+    if(todayNum<1||document.hidden||document.body.classList.contains('ov')||live.length>=3)return;
     const f=el('button','bflake');f.type='button';f.tabIndex=-1;f.innerHTML=FLAKE_SVG;
     const o={el:f,x:30+Math.random()*(innerWidth-60),y:-40,vx:0,vy:.55+Math.random()*.5,d:Math.random()*6.283,rot:0,grab:false,moved:0,last:null};
     box.appendChild(f);live.push(o);
@@ -2282,7 +2294,7 @@ function setupFlakes(){
 function setupSmoke(){
   document.querySelectorAll('.smoke').forEach(s=>{
     s.addEventListener('pointerdown',e=>{
-      if(s.classList.contains('gone'))return;e.preventDefault();
+      if(todayNum<1||s.classList.contains('gone'))return;e.preventDefault();
       const r=s.getBoundingClientRect();sparkle(r.left+r.width/2,r.top+r.height/2,9,'#f3eefb');
       s.classList.add('gone');Music.blip(988+Math.random()*400,.06,'square',.05);
       const n=Game.toy('bub');plus(r.left+r.width/2,r.top,'pop');
@@ -2410,8 +2422,9 @@ function setupSleigh(){
   if(todayNum!==24)return;
   const fly=()=>{
     if(document.hidden||document.body.classList.contains('ov'))return;
+    if(document.querySelector('.flyer.dragon')){setTimeout(fly,6000);return;}
     const s=el('button','sleigh');s.type='button';s.tabIndex=-1;s.setAttribute('aria-label','Le traîneau du Père Noël');
-    s.innerHTML='<svg viewBox="0 0 220 70" aria-hidden="true"><g stroke="#2b1b3d" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M64 38q30 6 60 2" fill="none" stroke="#8a5a3c"/>'+[0,1].map(i=>`<g transform="translate(${8+i*28} ${i?6:0})"><path d="M4 30q4-12 18-12h8q6 0 6 8v4z" fill="#a0673f"/><path d="M26 18l2-10M30 18l6-8M24 10l-4-4M34 10l4-6" fill="none" stroke="#6b4a2e"/><circle cx="34" cy="21" r="2.5" fill="${i?'#2b1b3d':'#e5484d'}" stroke="none"/><path d="M8 30v10M24 30v10" fill="none"/></g>`).join('')+'<path d="M124 34h52q14 0 16-16l8-4-2 22q-4 16-22 16h-46q-10 0-10-8z" fill="#e5484d"/><path d="M118 50h80q8 0 12-6" fill="none" stroke="#ffcf5c" stroke-width="4"/><circle cx="160" cy="18" r="10" fill="#ffe0c2"/><path d="M150 14q10-14 22-2l-4 2z" fill="#e5484d"/><circle cx="172" cy="10" r="3" fill="#fff"/><path d="M152 22q8 10 16 0" fill="#fff"/><rect x="140" y="20" width="16" height="14" rx="2" fill="#3ddc84"/><path d="M148 20v14" fill="none" stroke="#ffcf5c"/></g></svg>';
+    s.innerHTML='<svg viewBox="-4 -8 300 92" aria-hidden="true"><g stroke="#2b1b3d" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M88 44q30 2 90-6M180 40q20-2 76-8" fill="none" stroke="#8a5a3c" stroke-width="2"/><path d="M8 34h52q14 0 16-16l8-4-2 22q-4 16-22 16H16q-10 0-10-8z" fill="#e5484d" stroke-width="3"/><path d="M2 50h80q8 0 12-6" fill="none" stroke="#ffcf5c" stroke-width="4"/><circle cx="44" cy="18" r="10" fill="#ffe0c2" stroke-width="3"/><path d="M34 14q10-14 22-2l-4 2z" fill="#e5484d" stroke-width="3"/><circle cx="56" cy="10" r="3" fill="#fff"/><path d="M36 22q8 10 16 0" fill="#fff"/><rect x="18" y="20" width="16" height="14" rx="2" fill="#3ddc84" stroke-width="3"/><path d="M26 20v14" fill="none" stroke="#ffcf5c" stroke-width="3"/><g transform="translate(140 26)"><path d="M45 6q-2-7-7-10M41 0l-6-1M43 3q-1-6 2-9M44 -2l4-3M50 6q1-7 6-9M53 0l4-1" fill="none" stroke="#7a4f2c" stroke-width="2.6"/><path d="M8 32l-10 6l-6 -2M14 33l-6 9l-6 1M36 32l10 4l6 -3M40 30l10 -2l4 -5" fill="none" stroke="#7a4f2c" stroke-width="3.4"/><path d="M4 24q0-10 14-10h16q4 0 6-4l3-6q4-3 9-2l10 5q3 3 0 6l-9 1q-3 0-5 3l-3 8q-2 8-12 9H14Q4 34 4 24z" fill="#a0673f"/><path d="M12 30q12 4 24 0" fill="none" stroke="#e2b98c" stroke-width="3"/><circle cx="4" cy="20" r="3.4" fill="#fff"/><path d="M42 4l-3-4l5 2z" fill="#8a5a36"/><circle cx="49" cy="5" r="1.5" fill="#2b1b3d" stroke="none"/><circle cx="60" cy="8" r="2.2" fill="#2b1b3d"/><path d="M36 12q4 4 4 9" fill="none" stroke="#e5484d" stroke-width="3.4"/><circle cx="39" cy="20" r="2.2" fill="#ffcf5c" stroke-width="1.6"/></g><g transform="translate(216 18)"><path d="M45 6q-2-7-7-10M41 0l-6-1M43 3q-1-6 2-9M44 -2l4-3M50 6q1-7 6-9M53 0l4-1" fill="none" stroke="#7a4f2c" stroke-width="2.6"/><path d="M8 32l-10 6l-6 -2M14 33l-6 9l-6 1M36 32l10 4l6 -3M40 30l10 -2l4 -5" fill="none" stroke="#7a4f2c" stroke-width="3.4"/><path d="M4 24q0-10 14-10h16q4 0 6-4l3-6q4-3 9-2l10 5q3 3 0 6l-9 1q-3 0-5 3l-3 8q-2 8-12 9H14Q4 34 4 24z" fill="#a0673f"/><path d="M12 30q12 4 24 0" fill="none" stroke="#e2b98c" stroke-width="3"/><circle cx="4" cy="20" r="3.4" fill="#fff"/><path d="M42 4l-3-4l5 2z" fill="#8a5a36"/><circle cx="49" cy="5" r="1.5" fill="#2b1b3d" stroke="none"/><circle cx="60" cy="8" r="3.4" fill="#e5484d"/><path d="M36 12q4 4 4 9" fill="none" stroke="#e5484d" stroke-width="3.4"/><circle cx="39" cy="20" r="2.2" fill="#ffcf5c" stroke-width="1.6"/></g></g></svg>';
     let dropped=false;
     s.addEventListener('click',()=>{
       if(dropped){toast('Le Père Noël a déjà lâché ton cadeau. Il a une tournée, tu sais.');return;}
@@ -2435,9 +2448,9 @@ function confetti(){
 const HIT_LINES=["Hé ! Pas dans la carotte !","Raté… ah non, touché. Je note.","Tu veux la guerre ? Tu vas l'avoir.","Esquive ! Enfin, j'ai essayé.","Je suis fait de neige, ça ne compte pas comme une attaque.","Riposte !"];
 function snowmanHit(sm){
   const ground=$('.ground');sm.classList.remove('jump','shk');void sm.offsetWidth;sm.classList.add('shk');
-  const n=Game.toy('hit');const line=n%4===0?'Riposte !':pick(HIT_LINES);bubble(sm,ground,line);
+  const n=Game.toy('hit');const line=sayOnce('hit'+todayNum,HIT_LINES);if(line)bubble(sm,ground,line);
   Music.blip(330,.1,'square',.06);
-  if(line==='Riposte !'&&!RM()){const r=sm.getBoundingClientRect();const b=el('span','sbshot');b.style.left=(r.left+r.width/2)+'px';b.style.top=(r.top+r.height*.3)+'px';
+  if((line==='Riposte !'||(!line&&n%4===0))&&!RM()){const r=sm.getBoundingClientRect();const b=el('span','sbshot');b.style.left=(r.left+r.width/2)+'px';b.style.top=(r.top+r.height*.3)+'px';
     b.style.setProperty('--tx',(Math.random()*60-30)+'vw');b.style.setProperty('--ty',-(30+Math.random()*30)+'vh');document.body.appendChild(b);
     setTimeout(()=>{const br=b.getBoundingClientRect();sparkle(br.left+8,br.top+8,12,'#fff');b.remove();},900);}
 }
@@ -2476,12 +2489,14 @@ function setupWeek(){
   if(last&&last!==w&&T.hi)setTimeout(()=>{toast(T.hi);const sm=$('.egg.snowman');if(sm)bubble(sm,$('.ground'),pick(['Surprise ! On a déménagé.','Ne fais pas cette tête, c\'est toujours moi.','J\'ai changé de décor. Pas de carotte.']));},2600);
   if(w===2||w===4){
     const fly=()=>{if(document.hidden||document.body.classList.contains('ov')||RM())return;
+      if(w===4&&todayNum===24&&document.querySelector('.sleigh'))return;
       const f=el('button','flyer'+(w===4?' dragon':''));f.type='button';f.tabIndex=-1;f.setAttribute('aria-label',w===2?'Une sorcière livreuse':'Un dragon de Noël');
       f.innerHTML=(w===2?WITCH_SVG:DRAGON_SVG);
       f.addEventListener('click',()=>{const r=f.getBoundingClientRect();sparkle(r.left+r.width/2,r.top+r.height/2,14,w===2?'#ffcf5c':'#7fd6c2');Game.toy(w===2?'witch':'dragon');
         toast(w===2?pick(['La sorcière livre le pain de la Table. Elle a encore oublié la monnaie.','La sorcière te fait coucou. Son chat, beaucoup moins.','Livraison express de croissants. Signature non requise.']):pick(['Le dragon a fait fondre trois flocons. Il s\'excuse.','Le dragon de Noël te salue. Il a mis son écharpe.','Il crache des flammes ? Non : des paillettes. C\'est Noël.']));});
       $('#toys').appendChild(f);setTimeout(()=>f.remove(),12500);};
-    setTimeout(fly,5000);setInterval(fly,42000);
+    const xmas=w===4&&todayNum===24;
+    setTimeout(fly,xmas?25000:5000);setInterval(fly,xmas?180000:42000);
   }
   /* la sorcière repasse de temps en temps pour les retardataires (semaines 3 et 4) */
   if(w>=3){const late=()=>{if(Game.flag('witch')||document.hidden||document.body.classList.contains('ov')||RM())return;
@@ -2539,7 +2554,6 @@ function openSockFor(name){
   n.appendChild(txt('span','badge','Chaussette de '+name));
   n.appendChild(txt('h2','','Un mot pour '+name));
   if(!me){n.appendChild(txt('p','note','Dis-nous d\'abord qui tu es.'));const b=txt('button','btn','Choisir mon prénom');b.type='button';b.addEventListener('click',()=>{$('#carnet').classList.remove('open');askWho(true);});n.appendChild(b);Game.openSheet(n);return;}
-  if(todayNum<1){n.appendChild(txt('p','note','Les chaussettes ouvrent le 1er décembre.'));Game.openSheet(n);return;}
   const nf=nextFriday();
   n.appendChild(txt('p','note',`Ton mot est anonyme. ${name} pourra l'ouvrir le vendredi ${fmtDay(nf&&nf>todayNum?nf:(FRIDAYS.find(F=>F>todayNum)||25))}. Gentil ou taquin, jamais méchant.`));
   n.appendChild(txt('p','note small','Règle : 3 mots maximum par chaussette et par semaine. Le compteur repart à zéro après chaque vendredi.'));
@@ -2692,6 +2706,7 @@ function kaoTile(b){
 /* mode uwu secret : taper « uwu », ou toucher 5 fois la lune */
 let uwuT=null;
 function uwuMode(){
+  if(todayNum<1)return;
   document.body.classList.add('uwu');toast('Mode uwu activé (˶ᵔ ᵕ ᵔ˶) Toute la page rougit pendant 30 secondes.');
   if(!RM())for(let i=0;i<26;i++){const hh=el('span','uheart');hh.textContent=['♥','♡','❤'][i%3];hh.style.left=(Math.random()*96)+'vw';hh.style.animationDelay=(Math.random()*24)+'s';hh.style.fontSize=(14+Math.random()*18)+'px';document.body.appendChild(hh);setTimeout(()=>hh.remove(),30500);}
   Music.arp([84,88,91,96,91,88]);if(!Game.flag('uwu'))Game.flag('uwu',1);
@@ -2708,7 +2723,7 @@ function setupSecrets(){
     if(buf.endsWith('uwu')){buf='';uwuMode();}
     else if(/ti[ée]untigre$|tesuntigre$/.test(buf)){buf='';tigreSays();}
   });
-  const moon=$('.moon');if(moon){let n=0,t0=0,rt=null;moon.style.cursor='pointer';moon.addEventListener('click',()=>{const now=Date.now();if(now-t0>4000)n=0;t0=now;n++;
+  const moon=$('.moon');if(moon){let n=0,t0=0,rt=null;moon.style.cursor='pointer';moon.addEventListener('click',()=>{const now=Date.now();if(now-t0>4000)n=0;t0=now;n++;if(todayNum<1)n=1;
     moon.classList.remove('mwig');void moon.getBoundingClientRect();moon.classList.add('mwig');moon.style.setProperty('--mb',Math.min(n,4)/4);
     const r=moon.getBoundingClientRect();const say=['','hi','hi hi','hi hi hi','>///<'][n];if(say){let m=document.querySelector('.moonsay');if(!m){m=el('span','moonsay');document.body.appendChild(m);}m.textContent=say;m.style.left=(r.right+8)+'px';m.style.top=(Math.max(r.top+r.height*.5,14))+'px';m.classList.remove('go');void m.offsetWidth;m.classList.add('go');clearTimeout(m._t);m._t=setTimeout(()=>m.classList.remove('go'),1600);}
     Music.blip(880+n*120,.06,'triangle',.05);clearTimeout(rt);rt=setTimeout(()=>{moon.style.setProperty('--mb',0);n=0;},4000);
@@ -3183,7 +3198,7 @@ const RAR={rare:'Rare',leg:'Légendaire',uni:'Unique'};
     ov.classList.add('open');ov.scrollTop=0;close.focus();
   }
   function openCarnet(){
-    if(PRE()){const n=el('div','');n.appendChild(txt('span','badge','Carnet de la Table'));n.appendChild(txt('h2','','Tout commence le 1er décembre'));n.appendChild(txt('p','','Points, séries, badges et trésors cachés se réveillent à minuit, le 1er décembre. D\'ici là, tu peux te promener dans le décor, attraper la petite flamme et glisser des mots dans les chaussettes : ils s\'ouvriront le vendredi 4.'));n.appendChild(txt('p','note','Rien de ce que tu fais avant ne compte. Le bonhomme a vérifié le règlement.'));openSheet(n);return;}
+    if(PRE()){const n=el('div','');n.appendChild(txt('span','badge','Carnet de la Table'));n.appendChild(txt('h2','','Tout commence le 1er décembre'));n.appendChild(txt('p','','Points, séries, badges et trésors cachés se réveillent à minuit, le 1er décembre. D\'ici là, tu peux te promener dans le décor et glisser des mots dans les chaussettes : ils s\'ouvriront le vendredi 4 décembre.'));n.appendChild(txt('p','note','Rien de ce que tu fais avant ne compte. Le bonhomme a vérifié le règlement.'));openSheet(n);return;}
     const s=stats();const n=el('div','');
     n.appendChild(txt('span','badge','Carnet de la Table'));
     n.appendChild(txt('h2','',points()+' points'));
@@ -3279,20 +3294,23 @@ const RAR={rare:'Rare',leg:'Légendaire',uni:'Unique'};
       },1800);
     }
   }
-  const CAT_LINES=['Miaou. (Traduction : tu as ouvert la case 18, tu es maudit·e.)','Acédia te regarde. Elle n\'a aucune envie de se lever.','Prrr… Je note ton nom dans le carnet des pénalités.','Je ne suis pas un mimic. Quoique, ça dépend de l\'heure.','Elle a dit « flemme ». Je répète juste.'];
+  const CAT_LINES=['Miaou. (Traduction : tu as ouvert la case 18, tu es maudit·e.)','Acédia te regarde. Elle n\'a aucune envie de se lever.','Prrr… Je ronronne, mais je te surveille.','Je ne suis pas un mimic. Quoique, ça dépend de l\'heure.','Elle a dit « flemme ». Je répète juste.'];
+  const CAT_MORE=['Acédia m\'a demandé de surveiller le toit. Elle, elle dort.','D\'ici, je juge tout le monde. C\'est très reposant.'];
   function placeCat(h){
-    const ground=$('.ground');if(!ground||ground.querySelector('.cat'))return;
-    const c=el('button','cat');c.type='button';c.setAttribute('aria-label','Un chat noir aux yeux rouges');
+    const roof=$('.roof');const host=roof&&roof.parentElement;if(!host||host.querySelector('.cat'))return;
+    const c=el('button','cat roofcat');c.type='button';c.setAttribute('aria-label','Un chat noir aux yeux rouges, sur le toit');
     let ci=Math.floor(Math.random()*CAT_IMGS.length);
     const im=document.createElement('img');im.alt='';im.src=CAT_IMGS[ci];c.appendChild(im);
-    const right=h.offsetLeft+h.offsetWidth+60<ground.clientWidth;
-    c.style.left=(right?h.offsetLeft+h.offsetWidth-4:Math.max(0,h.offsetLeft-54))+'px';
-    c.style.top=(h.offsetTop+h.offsetHeight-60)+'px';
+    host.appendChild(c);
+    const put=()=>{const r=roof.getBoundingClientRect(),hr=host.getBoundingClientRect();const vx=548,vy=18+(vx-400)*142/386;
+      const x=r.left-hr.left+r.width*vx/800,y=r.top-hr.top+r.height*vy/170;c.style.left=(x-c.offsetWidth/2)+'px';c.style.top=(y-c.offsetHeight+6)+'px';};
+    im.addEventListener('load',put);put();addEventListener('resize',put);
     c.addEventListener('click',()=>{
       if(!GS.flags.cat){GS.flags.cat=1;gSave();checkBadges();}
-      ci=(ci+1)%CAT_IMGS.length;im.src=CAT_IMGS[ci];bubble(c,ground,pick(CAT_LINES));
+      ci=(ci+1)%CAT_IMGS.length;im.src=CAT_IMGS[ci];
+      const t=typeof sayOnce==='function'?sayOnce('acedia',CAT_LINES.concat(CAT_MORE)):pick(CAT_LINES);
+      if(t){const q=c.getBoundingClientRect();folkSay(q.left+q.width/2,q.bottom+6,t);}
     });
-    ground.appendChild(c);
   }
   function trainSync(h){
     const box=document.querySelector('.railbox');if(!box)return;
@@ -3480,42 +3498,55 @@ const LUCIE_LINES=["Je suis Lucie, celle qui porte la lumière. Tu n'aurais pas 
 "En Suède, on me fête le 13 décembre : une chanson, des bougies, et la nuit recule un peu.",
 "Ma couronne a quatre bougies. Ce matin, il en manquait une… je crois savoir qui l'a prise.",
 "Si tu attrapes la petite flamme, dis-lui de rentrer avant la nuit.",
-"On m'apporte des brioches au safran, les lussekatter. Il en reste une, si tu veux."];
+"On m'apporte des brioches au safran, les lussekatter. Il en reste une, si tu veux.",
+"Je chante « Sankta Lucia ». Pas très juste, mais avec conviction.",
+"Autrefois, on disait que ma nuit était la plus longue de l'année. Alors j'apporte de quoi l'éclairer.",
+"Je repars bientôt. La lumière, elle, reste un peu."];
 const ARIE_LINES=["Bonjour ! Je suis Tante Arie, la fée de Franche-Comté. Oui, j'ai des pieds d'oie.",
 "Voici Marion, mon ânesse. Elle porte les cadeaux, moi je porte la lanterne.",
 "Dans le Doubs, on m'attend la nuit de Noël. Les enfants sages trouvent des noix et des fruits secs.",
-"Je passe voir si tout le monde a été sage. Je ne dirai pas qui a ouvert ses cases en retard."];
+"Je passe voir si tout le monde a été sage. Je ne dirai pas qui a ouvert ses cases en retard.",
+"Marion adore les carottes. Le nez du bonhomme est en danger.",
+"J'ai traversé tout le Jura à pied. Avec des pattes d'oie, c'est une performance.",
+"Je regarde chaque chaussette en passant. Juste pour prendre les mesures."];
 const JOL_INTRO="Je suis Jólakötturinn, le chat de Noël. Je viens d'Islande, et je passe chaque année pendant les fêtes. Acédia t'a prévenu·e, j'espère.";
 const JOL_LINES=["En Islande, ceux qui n'ont pas reçu de vêtement neuf avant Noël risquent de croiser mon chemin.",
 "Je suis plus grand qu'une maison. Ce soir, je me suis fait petit pour vous.",
 "Je vis avec Grýla et ses treize fils, les Pères Noël islandais. Une famille… compliquée.",
-"Acédia et moi, on s'entend bien : on aime les gens qui restent au chaud.",
+"Acédia et moi, on se connaît bien. Elle m'a beaucoup parlé de vous.",
 "Un pull neuf, une paire de chaussettes… et tu n'as rien à craindre de moi.",
-"Le pull moche du bonhomme compte comme un vêtement neuf. Je l'ai vérifié."];
-const JOL_EYES=["…","Tu as reçu des vêtements neufs, cette année ?","Je regarde. C'est tout.","Encore quelques jours."];
+"Tu as un pull neuf ? Parfait. On peut rester amis.",
+"En décembre, les Islandais tricotent beaucoup. Maintenant, tu sais pourquoi.",
+"Je ne mange plus personne. Enfin… presque plus."];
+const JOL_EYES=["…","Tu as reçu des vêtements neufs, cette année ?","Je regarde. C'est tout.","Encore quelques jours.","Ne te retourne pas.","On se verra le 23."];
 
-function folkSay(x,y,t){const b=el('span','flamesay folksay');b.textContent=t;b.style.left=x+'px';b.style.top=y+'px';document.body.appendChild(b);
+/* chaque réplique n'est dite qu'une fois : ensuite, le personnage se tait */
+function sayOnce(key,pool){const said=store.get('ate_said_'+key,[])||[];const left=pool.map((t,i)=>i).filter(i=>!said.includes(i));if(!left.length)return null;const i=left[Math.floor(Math.random()*left.length)];said.push(i);store.set('ate_said_'+key,said);return pool[i];}
+function onceLine(key,t){if(store.get('ate_said1_'+key,0))return null;store.set('ate_said1_'+key,1);return t;}
+const sayDur=t=>Math.max(10000,3500+t.length*90);
+function folkSay(x,y,t){document.querySelectorAll('.folksay').forEach(e=>e.remove());const b=el('span','flamesay folksay');b.textContent=t;b.style.left=x+'px';b.style.top=y+'px';document.body.appendChild(b);
   const r=b.getBoundingClientRect();if(r.right>innerWidth-8)b.style.left=(x-(r.right-innerWidth+8))+'px';if(r.left<8)b.style.left=(x+8-r.left)+'px';
-  setTimeout(()=>b.remove(),Math.max(4500,2500+t.length*55));}
+  b.style.setProperty('--d',sayDur(t)+'ms');setTimeout(()=>b.remove(),sayDur(t));}
 
 function setupFolk(){
   const ground=$('.ground');if(!ground||todayNum<1)return;
   const d=todayNum;
   /* Sainte Lucie : du 13 au 16, puis une fois en rattrapage */
-  const lucieCatch=d>16&&d<=25&&!store.get('ate_lucie',0);
+  const lucieCatch=d>16&&d<=20&&!store.get('ate_lucie',0);
   if(lucieOn()||lucieCatch){
     const b=el('button','lucie');b.type='button';b.setAttribute('aria-label','Sainte Lucie, avec sa couronne de bougies');
     b.innerHTML=LUCIE_SVG.replace('class="lucie"','class="luciesvg"');ground.appendChild(b);store.set('ate_lucie',1);
     let first=true;
     b.addEventListener('click',()=>{Music.arp([76,79,84]);
-      bubble(b,ground,first&&lucieCatch?"Je suis passée le 13, mais tu n'étais pas là ! Alors je reviens, juste un instant.":nextFrom(b,LUCIE_LINES,'l'));first=false;});
+      const t=first&&lucieCatch?"Je suis passée le 13, mais tu n'étais pas là ! Alors je reviens, juste un instant.":sayOnce('lucie',LUCIE_LINES);first=false;
+      if(t)bubble(b,ground,t);else{const r=b.getBoundingClientRect();sparkle(r.left+r.width/2,r.top+12,12,'#ffe27a');}});
     if(lucieCatch)setTimeout(()=>bubble(b,ground,"Je suis passée le 13, mais tu n'étais pas là ! Alors je reviens, juste un instant."),2600);
   }
   /* Tante Arie : traces du 18 au 22, traversées du 21 au 24, la carte le 24 à midi */
   if(d>=18&&d<=22){
     const pr=el('div','oieprints');pr.setAttribute('aria-hidden','true');
     for(let i=0;i<9;i++){const s=el('span','oie');s.innerHTML='<svg viewBox="0 0 20 18"><path d="'+OIE_D+'"/></svg>';s.style.left=(6+i*10.5)+'%';s.style.bottom=(i%2?18:8)+'px';s.style.setProperty('--r',(84+(i%3)*6)+'deg');pr.appendChild(s);}
-    pr.addEventListener('click',()=>{bubble(pr,ground,pick(["Des traces de pattes d'oie… Quelqu'un est passé par là cette nuit.","Elles vont tout droit vers les chaussettes. Curieux.","Une oie ? Non. Une oie ne porte pas de lanterne."]));});
+    pr.addEventListener('click',()=>{const t=sayOnce('traces',["Des traces de pattes d'oie… Quelqu'un est passé par là cette nuit.","Elles vont tout droit vers les chaussettes. Curieux.","Elles s'arrêtent juste devant le bonhomme. Il jure qu'il n'a rien vu."]);if(t)bubble(pr,ground,t);});
     ground.appendChild(pr);
   }
   const arieCatch=d>=25&&!store.get('ate_arie',0);
@@ -3523,13 +3554,15 @@ function setupFolk(){
     const parked=tarotAvail();
     const a=el('button','arie'+(parked?' parked':''));a.type='button';a.setAttribute('aria-label','Tante Arie et son ânesse Marion');a.innerHTML=ARIE_SVG;
     a.addEventListener('click',()=>{Music.arp([67,72,76]);
-      let t;if(d===24&&!parked)t="Reviens à midi : j'aurai glissé quelque chose dans ta chaussette.";
-      else if(parked&&tarotPending())t="C'est fait ! Regarde dans ta chaussette, la tienne brille.";
-      else t=nextFrom(a,ARIE_LINES,'a');
-      bubble(a,ground,t);});
-    if(parked){ground.appendChild(a);store.set('ate_arie',1);}
+      let t=null;if(d===24&&!parked)t=onceLine('arie24',"Reviens à midi : j'aurai glissé quelque chose dans ta chaussette.");
+      else if(parked&&tarotPending())t=onceLine('ariecard',"C'est fait ! Regarde dans ta chaussette, la tienne brille.");
+      if(!t)t=sayOnce('arie',ARIE_LINES);
+      if(t)bubble(a,ground,t);else{const r=a.getBoundingClientRect();sparkle(r.left+r.width*.38,r.top+r.height*.55,12,'#ffd36a');}});
+    if(parked){a.style.visibility='hidden';ground.appendChild(a);store.set('ate_arie',1);
+      const park=()=>parkArie(a,ground);setTimeout(park,1100);addEventListener('resize',()=>{clearTimeout(a._pt);a._pt=setTimeout(park,200);});}
     else{
-      const walk=()=>{if(document.hidden||document.body.classList.contains('ov')||a.isConnected)return;a.classList.remove('go');ground.appendChild(a);void a.offsetWidth;a.classList.add('go');store.set('ate_arie',1);setTimeout(()=>a.remove(),RM()?9000:22000);};
+      const walk=()=>{if(document.hidden||document.body.classList.contains('ov')||a.isConnected)return;a.classList.remove('go');ground.appendChild(a);void a.offsetWidth;a.classList.add('go');store.set('ate_arie',1);setTimeout(()=>a.remove(),RM()?9000:22000);
+        const done=new Set();const watch=()=>{if(!a.isConnected)return;const r=a.getBoundingClientRect();const cx=r.left+r.width*.3;document.querySelectorAll('#socks .sock').forEach((s,i)=>{if(done.has(i))return;const q=s.getBoundingClientRect();if(Math.abs(q.left+q.width/2-cx)<14){done.add(i);s.classList.remove('wiggle');void s.offsetWidth;s.classList.add('wiggle');setTimeout(()=>s.classList.remove('wiggle'),900);}});requestAnimationFrame(watch);};requestAnimationFrame(watch);};
       setTimeout(walk,4000);if(!arieCatch)setInterval(walk,240000);
     }
   }
@@ -3542,10 +3575,29 @@ function setupFolk(){
       const pad=10;hit.style.left=(l-pad)+'px';hit.style.top=(t-pad)+'px';hit.style.width=(r-l+pad*2)+'px';hit.style.height=(bt-t+pad*2)+'px';};
     place();addEventListener('resize',place);setTimeout(place,800);
     let met=store.get('ate_jol',0)===1;
-    hit.addEventListener('click',()=>{const q=hit.getBoundingClientRect();w.classList.remove('blink');void w.offsetWidth;w.classList.add('blink');
-      let t;if(d<23)t=pick(JOL_EYES);else{if(!met){t=JOL_INTRO;met=true;store.set('ate_jol',1);}else t=pick(JOL_LINES);Game.catSeen();}
-      folkSay(q.left+q.width/2,q.bottom+8,t);});
+    hit.addEventListener('click',e=>{const under=document.elementsFromPoint(e.clientX,e.clientY).map(x=>x!==hit&&x.closest&&x.closest('a,button,input,select,.tile')).find(x=>x&&x!==hit);if(under){under.click();return;}const q=hit.getBoundingClientRect();w.classList.remove('blink');void w.offsetWidth;w.classList.add('blink');
+      let t;if(d<23)t=sayOnce('joleyes',JOL_EYES);else{if(!met){t=JOL_INTRO;met=true;store.set('ate_jol',1);}else t=sayOnce('jol',JOL_LINES);Game.catSeen();}
+      if(t)folkSay(q.left+q.width/2,q.bottom+8,t);});
   }
+}
+
+/* trouve une place libre sur le sol (sans recouvrir sapins, bonhomme, chat, Lucie, Arie) */
+function groundGaps(ground,skip){
+  const g=ground.getBoundingClientRect();const W=g.width;
+  const occ=[...ground.querySelectorAll('.egg,.cat,.lucie,.arie.parked')].filter(e=>e!==skip&&e.offsetWidth&&e.style.visibility!=='hidden').map(e=>{const r=e.getBoundingClientRect();return[r.left-g.left-6,r.right-g.left+6];}).sort((x,y)=>x[0]-y[0]);
+  const gaps=[];let x=12;occ.forEach(([l,r])=>{if(l>x)gaps.push([x,l]);x=Math.max(x,r);});if(W-12>x)gaps.push([x,W-12]);
+  return{gaps,W};
+}
+function freeSpot(ground,w,nearX,skip){
+  const {gaps,W}=groundGaps(ground,skip);if(!gaps.length)return null;
+  const fit=gaps.filter(q=>q[1]-q[0]>=w);
+  if(fit.length&&nearX!=null){fit.sort((p,q)=>Math.abs((p[0]+p[1])/2-nearX)-Math.abs((q[0]+q[1])/2-nearX));const q=fit[0];const l=Math.max(q[0],Math.min(q[1]-w,nearX-w/2));return{left:l,w};}
+  const best=gaps.sort((p,q)=>(q[1]-q[0])-(p[1]-p[0]))[0];const room=best[1]-best[0];const ww=Math.min(w,room);return{left:best[0]+(room-ww)/2,w:ww};
+}
+function parkArie(a,ground){
+  const W=ground.getBoundingClientRect().width;const want=Math.min(160,Math.max(110,W*.18));
+  const sp=freeSpot(ground,want,null,a)||{left:W-want-12,w:want};const w=Math.max(70,sp.w);
+  a.style.width=w+'px';a.style.right='auto';a.style.left=sp.left+'px';a.style.visibility='';
 }
 
 /* ---------- la carte de la Table (24 décembre, à partir de midi) ---------- */
@@ -3593,6 +3645,7 @@ function tarotWelcome(){if(tarotPending())setTimeout(()=>{if(tarotPending())toas
 (async function init(){
   snow();setupMusic();setupEggs();setupSide();setupToys();
   todayNum=await resolveToday();
+  document.body.classList.toggle('pre',todayNum<1);
   renderGrid();renderStatus();
   setupAmbiance();
   if(cheated){toast(pick(CHEAT),true);Game.setCheat();}
