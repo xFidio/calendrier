@@ -854,6 +854,21 @@ body.ov .flame,body.locked .flame{display:none}
 /* avant le 1er décembre : les jouets dorment */
 body.pre #sball{display:none}
 body.pre #bird,body.pre #garl .bulb,body.pre .smoke,body.pre .chim-hit{pointer-events:none;cursor:default}
+.flamesay.big{font-size:1.7rem;animation-duration:4s}
+
+/* ---- Le saviez-vous ? ---- */
+.dyk{position:fixed;inset:0;z-index:58;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(15,10,40,.55);backdrop-filter:blur(3px);animation:dykIn .35s ease-out}
+.dyk.out{opacity:0;transition:opacity .3s}
+@keyframes dykIn{from{opacity:0}}
+.dykcard{position:relative;width:min(420px,100%);max-height:90vh;overflow:auto;border:4px solid var(--ink-d);border-radius:22px;background:linear-gradient(170deg,#fffaf0,#f3ecff);color:var(--ink-d);padding:18px 20px 20px;box-shadow:0 8px 0 var(--ink-d);text-align:center;animation:dykPop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes dykPop{from{transform:translateY(20px) scale(.92)}}
+.dykpic{height:120px;display:flex;align-items:flex-end;justify-content:center;margin:-4px 0 6px;overflow:hidden}
+.dykpic .dykart{height:118px;width:auto}.dykpic .dykart.wide{height:100px}
+.dykeyes{width:220px;height:118px;overflow:hidden;position:relative;border-radius:14px;background:#120c2e}
+.dykeyes .jol{position:absolute;height:auto;width:330%;left:-150%;top:-72%}
+.dyktag{display:inline-block;font:900 .72rem Nunito,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);border:2px solid var(--ink-d);border-radius:20px;padding:3px 10px}
+.dykcard h2{font-family:var(--font-display);font-weight:400;margin:8px 0 6px;font-size:1.5rem}
+.dykcard p{margin:0 0 14px;line-height:1.5;text-align:left}
 
 </style>
 </head>
@@ -1159,59 +1174,8 @@ const TEASERS=[
  `Demain : la veille. Celle qu'on attend.`,
  `Demain : la finale. Prépare ton palmarès.`
 ];
-const OUTFITS={
- 1:{c:'c16',n:'la couronne de l\'Avent',l:'Couronne de l\'Avent à bougies. J\'ai déjà assez de problèmes avec la chaleur.'},
- 2:{c:'c17',n:'la robe de Jedi et le sabre laser',l:'Robe de Jedi et sabre laser. Écoute bien le bruit qu\'il fait : vvvmmmm.'},
- 3:{c:'c13',n:'la fausse moustache et la mallette',l:'Fausse moustache et mallette attachée au poignet. Opération Mincemeat, version neige.'},
- 4:{c:'c3',n:'la casquette de chef de gare',l:'Casquette de chef de gare. Prochain départ : la fenêtre de ton choix.'},
- 5:{c:'c7',n:'une pile de livres sur la tête',l:'Une pile de livres sur la tête. Tradition islandaise : on lit, et on mange du chocolat.'},
- 6:{c:'c5',n:'la mitre de Saint Nicolas',l:'Mitre de Saint Nicolas. Pas de reliques, juste de la neige.'},
- 7:{c:'c6',n:'la barretina catalane',l:'Barretina catalane. Je surveille la bûche qui fait des cadeaux.'},
- 8:{c:'c1',n:'le chapeau de mage étoilé',l:'Chapeau de mage étoilé. Je lance Orion. Il rate rarement.'},
- 9:{c:'c18',n:'le chapeau de champion de chifoumi',l:'Chapeau de champion du chifoumi. Je joue toujours au hasard et je me plains toujours de perdre.'},
- 10:{c:'c8',n:'le costume de chocobo',l:'Tenue de chocobo. Wark ! Avant les consoles, il y avait les cartes. Moi, je préfère les jeux où l\'on court.'},
- 11:{c:'c25',n:'la capuche de tigre',l:'Capuche de tigre. Si tu me dis merci, dis-le comme à Marseille.'},
- 12:{c:'c9',n:'la pluie de code vert et la pilule rouge',l:'Pluie de code vert et pilule rouge. Je sais ce que disent les lettres, mais je ne dirai rien avant ta réponse.'},
- 13:{c:'c20',n:'le tablier de barista',l:'Tablier de barista. Mon lait végétal mousse mal, comme tout le monde.'},
- 14:{c:'c10',n:'un casque de vélo',l:'Casque de vélo. Je sais dessiner un vélo, moi : deux boules et un guidon.'},
- 15:{c:'c24',n:'la toque et la tasse de chocolat chaud',l:'Toque et tasse de chocolat chaud. Je goûte à l\'aveugle, mais seulement avec les mots.'},
- 16:{c:'c23',n:'le dossard 90',l:'Dossard 90 : quatre-vingt-dix en France, nonante en Belgique et en Suisse. Moi, je suis hors course.'},
- 17:{c:'c14',n:'la capuche de dragon et son tas d\'or',l:'Capuche de dragon et tas d\'or. Au Monopoly, c\'est le même plan : tout garder pour soi. Ne touche pas aux pièces, elles sont en chocolat.'},
- 18:{c:'c12',n:'le costume de mimic',l:'Je suis un mimic. Ne m\'ouvre pas, je mords. Classé dangereux par la Fondation.'},
- 19:{c:'c22',n:'le casque de marine et son fusil',l:'Casque vert et fusil. Je cherche un message caché à l\'envers, pour John Romero.'},
- 20:{c:'c21',n:'la couronne d\'olivier et de figues',l:'Couronne d\'olivier et de figues. Treize desserts, un seul bonhomme de neige : je prends le nougat.'},
- 21:{c:'c26',n:'le turban de devin',l:'Turban de devin. Pense à un mot, je devine d\'où tu viens.'},
- 22:{c:'c11',n:'le heaume de chevalier',l:'Heaume de chevalier. Pour croiser Krampus sans y laisser une corne.'},
- 23:{c:'c15',n:'la couronne de givre',l:'Couronne de givre. Libérée, délivrée : version bonhomme de neige.'},
- 24:{c:'c2',n:'le maillot de foot',l:'Maillot bleu, rouge et blanc. Il paraît qu\'on a joué au foot pendant la trêve.'}
-};
-const SNOW_DAILY=[
- `Premier jour ! Je suis le bonhomme de neige du chalet. Je reviens tous les jours avec un truc à dire.`,
- `Vvvmmmm. Pardon, je répète mon bruitage pour un film.`,
- `Psst. Là-haut, à gauche : la Lune a l'air de bouder. Va voir de plus près.`,
- `Je n'ai pas de fenêtre. J'ai vue sur un sapin, c'est déjà pas mal.`,
- `Un livre, un chocolat chaud, et personne qui parle. Je rêve.`,
- `Aujourd'hui, c'est la Saint-Nicolas. Je ne vole pas d'os, je te le promets.`,
- `J'ai mis une écharpe. Pas pour le froid, pour le style.`,
- `Ça fume au-dessus du toit. Regarde la cheminée de plus près : elle a quelque chose à dire.`,
- `Chifoumi aujourd'hui. Je te préviens : je n'ai pas de mains, donc je ne peux pas perdre.`,
- `Quelqu'un me traite de Ronflex aujourd'hui. C'est un compliment, à mon avis.`,
- `Tié un tigre ? Non : tié un bonhomme de neige. Mais merci quand même.`,
- `Un mot du titre brille un peu trop. Il cache quelque chose. Essaie de cliquer dessus.`,
- `Je ne mousse pas, moi non plus. Pas de lait végétal pour la neige.`,
- `Aujourd'hui, un truc à dessiner. Mon vélo à moi n'a pas de roues. Ça compte ?`,
- `Les chocolats chauds, c'est une menace pour ma santé. J'observe.`,
- `Chez moi, on dit nonante. J'ai des cousins belges, ils ont moins froid.`,
- `Les petites étoiles du bas ne sont pas que décoratives. Tente la première.`,
- `Si je dois survivre dans un film d'horreur, je me cache dans mon propre sapin.`,
- `Si tu m'entends à l'envers aujourd'hui, ne panique pas. C'est normal.`,
- `Treize desserts ! Je prends tout, sauf le chaud.`,
- `Le jour le plus court de l'année, et moi, j'ai des dons de voyance. Va voir la case.`,
- `Le cadenas de la case 25 clignote. Il a un secret. Va le voir.`,
- `Je ne chante pas Libérée, délivrée. Je ne suis pas libérée, je suis posé là.`,
- `Demain, c'est le grand soir. Aujourd'hui, c'est le soir d'avant. J'ai du trac.`,
- `C'est le dernier jour. J'ai mis une couronne. Je n'en parlerai pas plus.`
-];
+const OUTFITS={"1":{"c":"c16","n":"la couronne de l'Avent","l":"Une couronne de l'Avent avec ses bougies. Pas idéal quand on craint la chaleur."},"2":{"c":"c17","n":"la robe de Jedi et le sabre laser","l":"Robe de Jedi et sabre laser. Écoute le bruit : vvvmmmm."},"3":{"c":"c13","n":"la fausse moustache et la mallette","l":"Fausse moustache et mallette attachée au poignet. L'opération Mincemeat, version neige."},"4":{"c":"c3","n":"la casquette de chef de gare","l":"Casquette de chef de gare. Prochain départ : la fenêtre de ton choix."},"5":{"c":"c7","n":"une pile de livres sur la tête","l":"Une pile de livres sur la tête. Comme en Islande : on lit et on mange du chocolat."},"6":{"c":"c5","n":"la mitre de Saint Nicolas","l":"La mitre de saint Nicolas. Pas de reliques, rien que de la neige."},"7":{"c":"c6","n":"la barretina catalane","l":"Une barretina catalane. Je garde un œil sur la bûche qui fait des cadeaux."},"8":{"c":"c1","n":"le chapeau de mage étoilé","l":"Chapeau de mage étoilé. Je lance un sort d'Orion, il rate rarement."},"9":{"c":"c18","n":"le chapeau de champion de chifoumi","l":"Chapeau de champion de chifoumi. Je joue au hasard, et je râle quand je perds."},"10":{"c":"c8","n":"le costume de chocobo","l":"Costume de chocobo. Wark ! Les cartes, c'est bien, mais moi je préfère courir."},"11":{"c":"c25","n":"la capuche de tigre","l":"Capuche de tigre. Si tu me dis merci, dis-le comme à Marseille."},"12":{"c":"c9","n":"la pluie de code vert et la pilule rouge","l":"Pluie de code vert et pilule rouge. Je sais ce que disent les lettres, mais je me tais jusqu'à ta réponse."},"13":{"c":"c20","n":"le tablier de barista","l":"Tablier de barista. Je t'aurais bien fait un cappuccino, mais tu es plus près de la cuisine que moi. Je te laisse t'en occuper."},"14":{"c":"c10","n":"un casque de vélo","l":"Casque de vélo. Moi, un vélo, je sais le dessiner : deux boules et un guidon."},"15":{"c":"c24","n":"la toque et la tasse de chocolat chaud","l":"Toque et tasse de chocolat chaud. Je goûte les yeux fermés, mais seulement avec des mots."},"16":{"c":"c23","n":"le dossard 90","l":"Dossard 90 : quatre-vingt-dix en France, nonante en Belgique et en Suisse. Moi, je suis hors course."},"17":{"c":"c14","n":"la capuche de dragon et son tas d'or","l":"Capuche de dragon et tas d'or. Comme au Monopoly : on garde tout pour soi. Ne touche pas aux pièces, elles sont en chocolat."},"18":{"c":"c12","n":"le costume de mimic","l":"Je suis un mimic. Ne m'ouvre pas, je mords. La Fondation m'a classé dangereux."},"19":{"c":"c22","n":"le casque de marine et son fusil","l":"Casque vert et fusil. Je cherche le message caché de John Romero, à l'envers."},"20":{"c":"c21","n":"la couronne d'olivier et de figues","l":"Couronne d'olivier et de figues, pour les treize desserts de Provence. Mon préféré ? Le nougat."},"21":{"c":"c26","n":"le turban de devin","l":"Turban de devin. Pense à un mot, je devine d'où tu viens."},"22":{"c":"c11","n":"le heaume de chevalier","l":"Heaume de chevalier. Krampus rôde aujourd'hui, je préfère être bien protégé."},"23":{"c":"c15","n":"la couronne de givre","l":"Couronne de givre. « Libérée, délivrée », version bonhomme de neige."},"24":{"c":"c2","n":"le maillot de foot","l":"Maillot bleu, blanc, rouge. Il paraît qu'on a joué au foot pendant la trêve de Noël."}};
+const SNOW_DAILY=["Premier jour ! Je suis le bonhomme de neige du chalet. Je passerai tous les jours te dire un mot.","Vvvmmmm. Pardon, je m'entraîne pour un bruitage de film.","Psst. En haut à gauche, la Lune a l'air de bouder. Va voir de plus près.","Moi, je n'ai pas de fenêtre. Juste une vue sur un sapin, c'est déjà pas mal.","Un livre, un chocolat chaud et personne qui parle. Le rêve.","C'est la Saint-Nicolas aujourd'hui. Je n'ai volé aucun os, promis.","J'ai mis une écharpe. Pas pour le froid, pour le style.","Ça fume au-dessus du toit. Regarde la cheminée de plus près, elle a quelque chose pour toi.","Chifoumi aujourd'hui ! Je te préviens, je n'ai pas de mains, donc je ne peux pas perdre.","Aujourd'hui, quelqu'un va se faire traiter de Ronflex. Pour moi, c'est un compliment.","Tié un tigre ? Non, tié un bonhomme de neige. Mais merci quand même.","Un mot du titre brille un peu trop. Il cache quelque chose : clique dessus.","Moi non plus, je ne mousse pas. Le lait végétal et la neige, même combat.","Aujourd'hui, on dessine. Mon vélo à moi n'a pas de roues, ça compte ?","Des chocolats chauds partout. C'est dangereux pour moi, alors je regarde de loin.","Chez moi, on dit nonante. J'ai des cousins belges, ils ont moins froid que moi.","Les petites étoiles en bas de la page ne sont pas là que pour faire joli. Essaie la première.","Dans un film d'horreur, je survivrais en me cachant dans mon propre sapin.","Aujourd'hui, on parle de messages cachés à l'envers dans les jeux vidéo. Moi, je n'ai rien à cacher. Enfin, presque.","En Provence, on sert treize desserts à Noël. Je les prends tous : quand on n'a pas d'estomac, c'est très pratique.","C'est le jour le plus court de l'année, et je me découvre des dons de voyance. Va voir la case.","Le cadenas de la case 25 clignote. Il a un secret, va le voir.","Aujourd'hui, on parle de la Reine des neiges. Le premier qui chante, je me casse.","Demain, c'est le grand jour. Ce soir, c'est la veille, et j'ai le trac.","C'est le dernier jour. J'ai mis une couronne, et je n'en dirai pas plus."];
 const BONUS=[
  {n:1,day:3,target:'moon',title:'La Lune boude',text:`La Lune s'éloigne de la Terre d'environ 3,8 cm par an. Elle est en train de nous quitter, très lentement.`},
  {n:2,day:8,target:'chimney',title:'La cheminée parle',text:`Les poulpes ont trois cœurs. Deux pour les branchies, un pour le reste du corps.`},
@@ -2020,61 +1984,8 @@ function setupMusic(){
 }
 
 /* ---------- easter eggs : sapins et bonhomme de neige ---------- */
-const SNOWMAN_LINES=[
- `Je suis un bonhomme de neige, pas une case. Arrête de cliquer.`,
- `Je n'ai pas de bras, juste deux branches. Respecte ça.`,
- `Je ne lèche pas les tables, moi. Je ne donne aucun nom.`,
- `Une pause au Coffee Loud ? Chocolat chaud, tiède pour moi.`,
- `Marine a décoré son sapin le 10 novembre. Je ne juge pas. J'étais déjà là.`,
- `J'adore les câlins tout chauds. Le problème, c'est le mot « chauds ».`,
- `Certaines personnes valent la peine qu'on fonde pour elles. Toi, tu as juste cliqué trois fois.`,
- `Mon rêve, c'est l'été. Tout le monde me dit que c'est une mauvaise idée.`,
- `Tu as pris mon nez ? Rends-le : c'est une carotte, pas un objet de collection.`,
- `L'amour, c'est mettre les besoins de l'autre avant les siens. Aujourd'hui, c'est laisser la case {N} fermée.`,
- `Je suis né avec une tête, un corps, et déjà un avis sur la chaleur.`,
- `Un jour, quelqu'un a rêvé d'être libérée, délivrée. Moi je suis juste posé là.`,
- `Dis-le à Mathilde : j'ai froid aux boules. C'est un fait.`,
- `Le 25 décembre, je serai encore là. Le 26, on verra la météo.`,
- `Jet de dés : 1 naturel. Pas grave, je suis un bonhomme de neige, j'ai déjà fondu pour moins que ça.`,
- `Mon alignement : neutre. Surtout neutre : je suis à 0 °C.`,
- `Dans un donjon, je serais le mimic. Un coffre en neige, ça surprend.`,
- `Dans les jeux d'horreur, le bonhomme de neige qui bouge quand on ne regarde pas, c'est moi. Ne te retourne pas.`,
- `Je compte les jours jusqu'à Noël. Sur mes doigts. Ah non en fait, j'en ai pas.`,
- `Je garde le calendrier la nuit. Personne n'a ouvert de case en avance. Enfin… presque personne.`,
- `Une sorcière boulangère a voulu me cuire. J'ai refusé poliment.`,
- `Kupo ! Il y a sûrement un moogle derrière ce volet.`,
- `Je ne suis pas un Pokémon, mais j'ai déjà un type : glace.`,
- `Mon cœur est un peu froid, mais il est sincère.`,
- `Les petits esprits de neige te regardent cliquer.`,
- `Il est dangereux d'y aller seul. Prends cette carotte.`,
- "Pas de bras, pas de chocolat ! Merde…"
-];
-const PINE_LINES=[
- `Ce sapin a déjà été décoré avant le 10 novembre. Chut.`,
- `Un sapin, c'est une raclette verticale. Ça se garnit.`,
- `Je suis un sapin, pas un portemanteau. Mais bon, vas-y.`,
- `Encore une boule ? Tu me gâtes.`,
- `Ne me secoue pas. J'ai des projets.`,
- `Si tu cherches les cadeaux, ils sont derrière le bonhomme de neige.`,
- `Je perds mes aiguilles, pas mon calme.`,
- `Marine m'a décoré le 10 novembre. Je suis prêt depuis.`,
- `Un sapin ne dort jamais. Il attend.`,
- `Plus je brille, moins on voit que je penche.`,
- `Je suis vert, mais je ne le fais pas exprès.`,
- `Ici, on ne dit pas « sapin », on dit « grand arbre à boules ».`,
- `Pas de panique : le chat ne m'a pas encore vu.`,
- `Guirlande ou pas guirlande, je reste classe.`,
- `Chaque boule est une décision. Merci pour celle-ci.`,
- `Je ne fais pas partie du paysage. Je suis le paysage.`,
- `Un dragon dort sous mes branches. Parle moins fort.`,
- `Mathilde a dit que j'étais le plus beau. Je ne vérifie pas.`,
- `Les étoiles là-haut ? Je les ai vues avant toi.`,
- `On m'a dit que le Coffee Loud avait un meilleur sapin. Je ne les crois pas.`,
- `Tu as de l'or dans les doigts. Ou de la glu. Je ne sais pas.`,
- `Un peu plus à gauche. Non, à droite. Voilà.`,
- `Je tiens debout par miracle et par un seau de sable.`,
- `Dans une autre vie, j'étais un mât de pirate.`
-];
+const SNOWMAN_LINES=["Je suis un bonhomme de neige, pas une case. Tu peux arrêter de cliquer.","Ce ne sont pas des bras, ce sont deux branches. Un peu de respect.","Moi, je ne lèche pas les tables. Et je ne balancerai personne.","Une pause au Coffee Loud ? Un chocolat chaud, mais tiède pour moi.","Marine a décoré son sapin le 10 novembre. Je ne juge pas, j'étais déjà là.","J'adore les câlins tout chauds. Enfin, surtout le mot « câlin ».","Il y a des gens pour qui ça vaut la peine de fondre. Toi, tu as juste cliqué trois fois.","Mon rêve, c'est de voir l'été. Tout le monde me le déconseille.","Tu m'as pris mon nez ? Rends-le-moi, c'est une carotte, pas un souvenir.","Aimer, c'est penser aux autres avant soi. Aujourd'hui, ça veut dire laisser la case {N} tranquille.","Je suis né avec une tête, un corps et déjà un avis sur la chaleur.","Il y en a une qui chante « libérée, délivrée ». Moi, je ne bouge pas d'ici.","Dis à Mathilde que j'ai froid aux boules. C'est un fait, pas une blague.","Le 25 décembre, je serai encore là. Le 26, ça dépendra de la météo.","Un 1 naturel aux dés ? Pas grave, j'ai déjà fondu pour moins que ça.","Mon alignement ? Neutre. Très neutre, même : je suis à 0 °C.","Dans un donjon, je ferais un très bon mimic. Un coffre en neige, personne ne s'en méfie.","Dans les jeux d'horreur, c'est moi le bonhomme de neige qui bouge quand on ne regarde pas. Ne te retourne pas.","Je compte les jours jusqu'à Noël sur mes doigts. Ah non, je n'ai pas de doigts.","Je surveille le calendrier la nuit. Personne n'a ouvert de case en avance. Enfin… presque personne.","Une sorcière boulangère a voulu me mettre au four. J'ai poliment refusé.","Kupo ! Je parie qu'un moogle se cache derrière ce volet.","Je ne suis pas un Pokémon, mais j'ai déjà mon type : Glace.","J'ai le cœur un peu froid, mais sincère.","Les petits esprits de la neige te regardent cliquer.","Il est dangereux d'y aller seul ! Prends cette carotte.","Pas de bras, pas de chocolat ! Merde…"];
+const PINE_LINES=["J'ai été décoré avant le 10 novembre. Chut.","Un sapin, c'est une raclette à la verticale : ça se garnit.","Je suis un sapin, pas un portemanteau. Mais bon, vas-y.","Encore une boule ? Tu me gâtes.","Tu reviens me voir ? J'avoue, je l'espérais.","Si tu cherches les cadeaux, ils sont derrière le bonhomme de neige.","Je perds mes aiguilles, mais pas mon calme.","Marine m'a décoré le 10 novembre. Depuis, je suis prêt.","Un sapin ne dort jamais. Il attend.","Plus je brille, moins on voit que je penche.","Je suis vert, mais ce n'est pas de la jalousie.","Ici, on ne dit pas « sapin », on dit « grand arbre à boules ».","Pas de panique, le chat ne m'a pas encore repéré.","Guirlande ou pas, je reste classe.","Chaque boule compte. Merci pour celle-ci.","Je ne fais pas partie du décor. Je suis le décor.","Un dragon dort sous mes branches. Parle moins fort.","Mathilde dit que je suis le plus beau. Je ne vais pas la contredire.","Les étoiles, là-haut ? Je les ai vues avant toi.","Le sapin du Coffee Loud est joli, mais moi, j'ai du caractère.","Tu as des doigts de fée. Ou de la glu, je ne sais pas trop.","Un peu plus à gauche. Non, à droite. Voilà.","Si tu continues, je vais rougir. Et un sapin rouge, c'est louche.","Dans une autre vie, j'étais le mât d'un bateau pirate."];
 const PINE_SPOTS=(()=>{
   const hw=y=>y<34?(y-4)/30*20:(y<56?10+(y-34)/22*16:12+(y-56)/20*16);
   const out=[];
@@ -2084,10 +1995,10 @@ const PINE_SPOTS=(()=>{
   });
   return out;
 })();
-const LIT_LINES=["Je clignote. Marine dit que c'est de l'art.", "Allumé, je me sens important.", "Les guirlandes, c'est mon seul rapport à l'électricité.", "Je suis prêt pour la photo de famille.", "Si je clignote trop, c'est que je suis émotif.", "Éclairé de la tête aux pieds. Les aiguilles n'ont rien vu venir.", "Ne me regarde pas trop longtemps : tu vas voir des étoiles.", "Je brille. Le bonhomme de neige est jaloux.", "Lumière, couleurs, ambiance. Il ne me manque que le chocolat chaud.", "Je suis la lumière de la Table. Enfin, du coin du salon.", "Mes boules sont bien accrochées. C'est un exploit.", "Allumé depuis tout à l'heure. Aucun regret.", "On dirait un sapin. Ah oui, c'est moi.", "Un jour, je serai un sapin de centre commercial. Ça vous fera drôle.", "Ça sent le sapin. C'est moi, merci de le noter.", "Je suis rouge, jaune, bleu, violet et blanc. Je ne choisis pas.", "Ça chatouille, les guirlandes. C'est le prix de la gloire.", "Les lumières, c'est comme les cases : une par jour, c'est mieux.", "Je scintille avec modération. Enfin, avec beaucoup, mais avec style.", "J'ai la boule. Plusieurs, même.", "Les boules, ça tient. Les promesses, c'est plus compliqué.", "C'est joli, mais ça fait un peu chaud.", "Ne me secoue pas, tout est en équilibre fragile.", "Je suis la star du salon. Le bonhomme de neige le sait.", "Je me sens fêtard. Et vert.", "Branché sur l'ambiance.", "Mon moment de gloire dure tant que tu cliques.", "Ta curiosité me fait briller.", "Ho ho ho. Pardon, c'est une habitude locale.", "Je suis allumé et je n'ai pas peur de le dire."];
-const PRE_SNOW=["Pas avant le 1er décembre. Je suis en répétition.","Reviens le 1er, je n'ai même pas encore mis ma tenue.","Chut, je révise mes répliques.","Tu peux cliquer, mais rien ne compte encore. J'ai vérifié le règlement.","Le 1er décembre, je serai magnifique. Là, je suis juste froid.","Les badges dorment encore. Ne les réveille pas.","Tu es en avance. J'apprécie, mais je ne te donnerai rien.","Je garde mes meilleures blagues pour décembre."];
-const SULK_ARG=["Arg. Je crois que tu m'as tapé dans la gorge cette fois-ci.","Aïe. Là, tu as touché la carotte.","Ouille. Dans les côtes. Je n'en ai pas, mais ça fait mal quand même.","Hé ! Je suis en neige, pas en caoutchouc."];
-const SULK_END=["J'ai plus envie de parler.","Je fais la tête. Reviens demain.","Chut. Je regarde la neige tomber.","Je n'ai plus rien à dire. Je fonds en silence."];
+const LIT_LINES=["Je clignote. Marine appelle ça de l'art.","Une fois allumé, je me sens important.","Les guirlandes, c'est mon seul lien avec l'électricité.","Je suis prêt pour la photo de famille.","Si je clignote trop, c'est que je suis ému.","Allumé de partout. Je crois que c'est toi qui me fais cet effet.","Ne me fixe pas trop longtemps, tu vas voir des étoiles.","Je brille, et le bonhomme de neige est jaloux.","Des lumières, des couleurs, de l'ambiance. Il ne manque que le chocolat chaud.","Je suis la lumière de la Table. Bon, celle du coin du salon.","Toutes mes boules tiennent. C'est un exploit.","Allumé depuis tout à l'heure, et aucun regret.","On dirait un vrai sapin. Ah, mais c'est moi.","Un jour, je serai un sapin de centre commercial. Ça vous fera bizarre.","Ça sent le sapin ? C'est moi, merci de l'avoir remarqué.","Rouge, jaune, bleu, violet et blanc : je n'ai pas su choisir.","Les guirlandes, ça chatouille. C'est le prix de la gloire.","Les lumières, c'est comme les cases : une par jour, c'est mieux.","Je scintille avec modération. Bon, avec beaucoup, mais avec style.","J'ai les boules. Plein, même.","Tu as un joli sourire. Enfin je crois, je n'ai pas d'yeux.","C'est joli, mais il commence à faire chaud.","Ne me secoue pas, tout tient en équilibre.","Je suis la star du salon, et le bonhomme de neige le sait.","On dit que je suis le plus élégant du salon. Tu confirmes ?","Branché sur l'ambiance.","Mon heure de gloire dure tant que tu cliques.","C'est ta curiosité qui me fait briller.","Ho ho ho. Pardon, c'est une habitude du coin.","Je suis allumé, et fier de l'être."];
+const PRE_SNOW=["Pas avant le 1er décembre, je suis encore en répétition.","Reviens le 1er, je n'ai même pas mis ma tenue.","Chut, je révise mon texte.","Tu peux cliquer, mais rien ne compte encore. J'ai vérifié le règlement.","Le 1er décembre, je serai magnifique. Pour l'instant, je suis juste froid.","Les badges dorment encore. Ne les réveille pas.","Tu es en avance. C'est gentil, mais je n'ai rien à te donner.","Je garde mes meilleures blagues pour décembre."];
+const SULK_ARG=["Aïe ! Là, tu m'as tapé dans la gorge.","Aïe. Pas la carotte !","Ouille, dans les côtes. Je n'en ai pas, mais ça fait mal quand même.","Hé ! Je suis en neige, pas en caoutchouc."];
+const SULK_END=["Je ne parle plus.","Je boude. Reviens demain.","Chut. Je regarde la neige tomber.","Je n'ai plus rien à dire. Je fonds en silence."];
 function snowTalk(){const t=store.get('ate_snowtalk',null);return(t&&t.d===todayNum)?t:{d:todayNum,n:0};}
 function pineDayState(){
   const st=store.get('ate_pine',null);
@@ -2120,11 +2031,7 @@ function nextFrom(h,pool,key){
   st.last=st.deck.pop();return st.last;
 }
 // répliques réservées à un jour (d) ou à une semaine de décor (w)
-const SNOWMAN_DATED=[
- {d:15,t:"Le chocolat chaud me fait de l'œil aujourd'hui. Je résiste. Je suis de glace."},
- {w:2,t:"Cette semaine, je pétris, je malaxe, et je fais monter la pâte bien comme il faut."},
- {w:2,t:"À la boulangerie, on m'a dit que j'avais la plus belle baguette du quartier. Je n'ai pas compris, mais j'ai dit merci."}
-];
+const SNOWMAN_DATED=[{"d":15,"t":"Le chocolat chaud me fait de l'œil aujourd'hui. Je résiste, je suis de glace."},{"w":2,"t":"Cette semaine, je pétris, je malaxe et je fais monter la pâte."},{"w":2,"t":"À la boulangerie, on m'a dit que j'avais la plus belle baguette du quartier. Je n'ai pas compris, mais j'ai dit merci."}];
 function snowPool(){
   const n=todayNum+1,ok=todayNum>=0&&todayNum<=24;
   const base=SNOWMAN_LINES.filter(l=>ok||!l.includes('{N}')).map(l=>l.replace('{N}',String(n)));
@@ -2195,10 +2102,10 @@ function setupEggs(){
         const full=bl&&bl.children.length>=h._spots.length;
         const justLit=full&&!h.classList.contains('lit');
         if(justLit){h.classList.add('lit');Game.setLit();}
-        if(justLit){bubble(h,ground,LIT_LINES[(Math.max(todayNum,0)*7+(key==='pl'?0:13))%LIT_LINES.length]);}
+        if(justLit){bubble(h,ground,pick(LIT_LINES));}
         else if(h.classList.contains('lit')){
           const k2=key+'L',lc=st[k2]||0;st[k2]=lc+1;store.set('ate_pine',st);
-          if(lc<2)bubble(h,ground,nextFrom(h,LIT_LINES,'lit'));
+          if(lc<2)bubble(h,ground,pick(LIT_LINES));
           else if(lc===2)bubble(h,ground,nextFrom(h,PINE_COQUIN,'coq')+' '+pick(KAO_SHY));
           else if(lc===3)bubble(h,ground,'Arrête. '+pick(KAO_SHY));
           else if(lc===4)bubble(h,ground,'Je boude. '+pick(KAO_SULK));
@@ -2381,14 +2288,8 @@ function setupToys(){setupFlakes();setupSmoke();setupGarland();setupBird();setup
 
 /* ---------- ambiance : neige qui monte, jour/nuit, étoiles filantes, traîneau, aurore, confettis ---------- */
 let Y_WIN=null; // gagnant d'hier, pour les taquineries du bonhomme
-const TEASE=[
-  "{W} ? « {A} » ? Félicitations. Je garde un œil sur toi.",
-  "Hier, la Table a élu {W} « {A} ». Moi, je n'ai rien dit. Je n'ai même pas de bouche, regarde bien.",
-  "{W}, « {A} »… Je l'aurais parié. Enfin, si j'avais pu voter.",
-  "Bravo {W}. « {A} », c'est un titre qui se mérite. Ou qui se subit.",
-  "On se moque gentiment, hein {W} ? « {A} », ça te va très bien."
-];
-const TEASE_ME=["« {A} » ! Toutes mes félicitations. Je fais semblant d'être surpris.","Alors, « {A} » ? Ne prends pas la grosse tête, elle fondrait."];
+const TEASE=["{W}, « {A} » ? Félicitations. Je t'ai à l'œil.","Hier, la Table a élu {W} « {A} ». Moi, je n'ai rien dit : je n'ai même pas de bouche.","{W}, « {A} »… J'en étais sûr. Dommage que je n'aie pas le droit de voter.","Bravo {W}. « {A} », c'est un titre qui se mérite. Ou qui se subit.","On te taquine, hein {W} ? Mais « {A} », ça te va bien."];
+const TEASE_ME=["« {A} » ! Félicitations. Je fais semblant d'être surpris.","Alors, « {A} » ? Attention à la grosse tête, elle risque de fondre."];
 function teaseLine(){if(!Y_WIN)return null;const p=Y_WIN.w===me?TEASE_ME:TEASE;return pick(p).replace(/\{W\}/g,Y_WIN.w).replace(/\{A\}/g,Y_WIN.a);}
 function setupSnowDepth(){
   const d=Math.max(0,Math.min(todayNum,25));
@@ -2445,7 +2346,7 @@ function confetti(){
     c.style.animationDelay=(Math.random()*.5)+'s';c.style.animationDuration=(1.8+Math.random()*1.4)+'s';c.style.setProperty('--rx',(Math.random()*720-360)+'deg');c.style.setProperty('--sx',(Math.random()*60-30)+'vw');
     document.body.appendChild(c);setTimeout(()=>c.remove(),3600);}
 }
-const HIT_LINES=["Hé ! Pas dans la carotte !","Raté… ah non, touché. Je note.","Tu veux la guerre ? Tu vas l'avoir.","Esquive ! Enfin, j'ai essayé.","Je suis fait de neige, ça ne compte pas comme une attaque.","Riposte !"];
+const HIT_LINES=["Hé, pas dans la carotte !","Raté… Ah non, touché. Je m'en souviendrai.","Tu veux la guerre ? Tu vas l'avoir.","J'ai essayé d'esquiver. J'ai vraiment essayé.","Je suis en neige, ça ne compte pas comme une attaque.","Riposte !"];
 function snowmanHit(sm){
   const ground=$('.ground');sm.classList.remove('jump','shk');void sm.offsetWidth;sm.classList.add('shk');
   const n=Game.toy('hit');const line=sayOnce('hit'+todayNum,HIT_LINES);if(line)bubble(sm,ground,line);
@@ -2588,7 +2489,7 @@ function crownAndLast(all){
   const y=todayNum>1?firstOf(todayNum-1):null;
   if(y&&y.length>=3){const l=y[y.length-1];L_LAST={w:l.name,t:`${l.h} h ${String(l.mi||0).padStart(2,'0')}`};}
 }
-const LAST_LINES=["Hier, {W} a ouvert la case à {T}. On t'attendait, mais avec amour.","{W}, dernier·e à ouvrir hier ({T}). Le bonhomme de neige ne juge pas. Enfin, un peu.","Petite pensée pour {W}, qui a ouvert la case d'hier à {T}. Tout arrive à qui sait attendre."];
+const LAST_LINES=["Hier, {W} a ouvert la case à {T}. On t'attendait, mais avec amour.","Hier, c'est {W} qui a ouvert la case en dernier, à {T}. Je ne juge pas. Enfin, un peu.","Petite pensée pour {W}, qui a ouvert la case d'hier à {T}. Tout vient à point à qui sait attendre."];
 function lastLine(){if(!L_LAST||L_LAST.w===me&&Math.random()<.5)return null;return pick(LAST_LINES).replace('{W}',L_LAST.w===me?'toi':L_LAST.w).replace('{T}',L_LAST.t);}
 /* réactions au résultat d'hier */
 const REACTS=['Scandale','Mérité','Je demande un recomptage'];
@@ -2679,23 +2580,7 @@ const TAUNTS_COQUIN=[
  `Tu as les mains froides. Et la case reste fermée.`,
  `Je suis une case sérieuse. Enfin, à partir de mon jour.`
 ];
-const PINE_COQUIN=[
- `Doucement… je suis chatouilleux des aiguilles.`,
- `On se connaît à peine et tu me décores déjà ?`,
- `Tu me secoues comme ça, devant le bonhomme de neige ?`,
- `Encore ? Tu y prends goût, on dirait.`,
- `Attention à mes boules, elles sont fragiles. Et moi aussi.`,
- `Tu sais que je n'ai rien sous mes branches, hein ?`,
- `Si tu continues, je vais perdre mes aiguilles. Et ma dignité.`,
- `Mmh, plus à gauche. Non, je plaisante. Arrête.`,
- `Un sapin a besoin de tendresse, pas de tripotage.`,
- `Tu fais ça à tous les sapins ?`,
- `Je suis un sapin bien élevé. Toi, je ne sais pas.`,
- `On m'a enguirlandé pour moins que ça.`,
- `Je frissonne. C'est l'hiver, ou c'est toi ?`,
- `Range tes mains, il y a des enfants. Enfin, la Table des Enfants.`,
- `Mon tronc n'est pas une barre de pole dance.`
-];
+const PINE_COQUIN=["Doucement… je suis chatouilleux des aiguilles.","On se connaît à peine et tu me décores déjà ?","Tu me secoues comme ça, devant le bonhomme de neige ?","Encore ? Tu y prends goût, on dirait.","Attention à mes boules, elles sont fragiles. Moi aussi.","Tu sais qu'il n'y a rien sous mes branches, hein ?","Si tu continues, je vais perdre mes aiguilles. Et ma dignité.","Mmh, un peu plus à gauche… Non, je plaisante. Arrête.","Un sapin a besoin de tendresse, pas d'être tripoté.","Tu fais ça à tous les sapins ?","Moi, je suis un sapin bien élevé. Toi, je me pose des questions.","On m'a enguirlandé pour moins que ça.","Je frissonne. C'est l'hiver ou c'est toi ?","Range tes mains, il y a des enfants. Enfin, la Table des Enfants.","Mon tronc n'est pas une barre de pole dance."];
 const KAO_SHY=['>///<','(˶ᵔ ᵕ ᵔ˶)','uwu','owo','(⁄ ⁄•⁄ω⁄•⁄ ⁄)'];
 const KAO_SULK=['(｡•́︿•̀｡)','(>_<)','(ಥ﹏ಥ)','(ーー;)','(╥_╥)'];
 function kaoTile(b){
@@ -2713,7 +2598,7 @@ function uwuMode(){
   const h=$('.egg.snowman');if(h)setTimeout(()=>bubble(h,$('.ground'),'uwu… tu m\'as eu.'),600);
   clearTimeout(uwuT);uwuT=setTimeout(()=>document.body.classList.remove('uwu'),30000);
 }
-const TIGRE_REP=['Merci ! Tié un lynx.','Non, c\'est toi le tigre.','Tié un iguane, toi. Un vrai.','Arrête, je vais fondre de gêne.','Tié un hippopotame. C\'est un compliment, je te jure.','Tché un ovni. Voilà, c\'est dit.'];
+const TIGRE_REP=["Merci ! Tié un lynx.","Non, c'est toi le tigre.","Et toi, tié un iguane. Un vrai.","Arrête, je vais fondre de gêne.","Tié un hippopotame. C'est un compliment, je te jure.","Tié un ovni. Voilà, c'est dit."];
 function tigreSays(){const h=$('.egg.snowman');const r=pick(TIGRE_REP);if(h)bubble(h,$('.ground'),r);Game.toy('tigre');return r;}
 function setupSecrets(){
   let buf='';
@@ -2825,19 +2710,21 @@ function feeWeekState(){const w=WEEK();const st=store.get('ate_fee_w',null);retu
 function setupFlame(){
   if(store.get('ate_mel_w',0)===WEEK()&&todayNum>=1)Music.useMelody(true);
   if(todayNum<1)return;
-  let f=null,alive=false,x=0,y=0,vx=0,vy=0,tx=0,ty=0,lastT=0,raf=0,retarget=0,mote=0,leaving=false;
+  let f=null,alive=false,x=0,y=0,vx=0,vy=0,tx=0,ty=0,lastT=0,raf=0,retarget=0,mote=0,leaving=false,tired=0,pauseUntil=0;
+  const slow=()=>Math.max(.3,1-tired*.22);
   const W=()=>innerWidth,H=()=>innerHeight;
   const pickTarget=()=>{tx=W()*(.08+Math.random()*.84);ty=H()*(.1+Math.random()*.7);};
   const flee=(px,py,force)=>{const dx=x-px,dy=y-py,d=Math.hypot(dx,dy)||1;vx+=dx/d*force;vy+=dy/d*force;pickTarget();};
-  const onMove=e=>{if(!alive||leaving)return;const d=Math.hypot(e.clientX-x,e.clientY-y);if(d<120)flee(e.clientX,e.clientY,e.pointerType==='touch'?260:520);};
-  const onDown=e=>{if(!alive||leaving||e.target.closest('.flame'))return;const d=Math.hypot(e.clientX-x,e.clientY-y);if(d<90)flee(e.clientX,e.clientY,420);};
+  const onMove=e=>{if(!alive||leaving||performance.now()<pauseUntil)return;const d=Math.hypot(e.clientX-x,e.clientY-y);if(d<85)flee(e.clientX,e.clientY,(e.pointerType==='touch'?220:320)*slow());};
+  const onDown=e=>{if(!alive||leaving||e.target.closest('.flame'))return;const d=Math.hypot(e.clientX-x,e.clientY-y);if(d<48){catchIt();return;}if(d<110){tired++;flee(e.clientX,e.clientY,300*slow());}};
   addEventListener('pointermove',onMove,{passive:true});addEventListener('pointerdown',onDown,{passive:true});
-  const say=(t)=>{const b=el('span','flamesay');b.textContent=t;b.style.left=x+'px';b.style.top=(y-34)+'px';document.body.appendChild(b);setTimeout(()=>b.remove(),2200);};
+  const say=(t)=>{const b=el('span','flamesay big');b.textContent=t;b.style.left=Math.max(60,Math.min(innerWidth-60,x))+'px';b.style.top=Math.max(40,y-40)+'px';document.body.appendChild(b);setTimeout(()=>b.remove(),4000);};
   const step=t=>{
     if(!alive)return;const dt=Math.min(.05,(t-(lastT||t))/1000);lastT=t;
+    if(t<pauseUntil){f.style.transform='translate('+(x-17)+'px,'+(y-22)+'px)';lastT=t;raf=requestAnimationFrame(step);return;}
     if(t>retarget){pickTarget();retarget=t+900+Math.random()*900;}
     const ax=(tx-x)*1.6,ay=(ty-y)*1.6;vx+=ax*dt;vy+=ay*dt;
-    const sp=Math.hypot(vx,vy),max=leaving?700:360;if(sp>max){vx*=max/sp;vy*=max/sp;}
+    const sp=Math.hypot(vx,vy),max=leaving?700:360*slow();if(sp>max){vx*=max/sp;vy*=max/sp;}
     vx*=.985;vy*=.985;x+=vx*dt;y+=vy*dt;
     if(!leaving){if(x<20){x=20;vx=Math.abs(vx);}if(x>W()-20){x=W()-20;vx=-Math.abs(vx);}if(y<30){y=30;vy=Math.abs(vy);}if(y>H()-40){y=H()-40;vy=-Math.abs(vy);}}
     f.style.transform='translate('+(x-17)+'px,'+(y-22)+'px) rotate('+Math.max(-25,Math.min(25,vx/14))+'deg)';
@@ -2851,13 +2738,13 @@ function setupFlame(){
     if(alive||document.hidden||document.body.classList.contains('ov')||document.body.classList.contains('locked'))return;
     f=el('button','flame');f.type='button';f.tabIndex=-1;f.setAttribute('aria-label','Une petite flamme dorée');f.innerHTML=FLAME_SVG;
     const fromL=Math.random()<.5;x=fromL?-30:W()+30;y=H()*(.15+Math.random()*.5);vx=fromL?260:-260;vy=0;pickTarget();
-    leaving=false;alive=true;lastT=0;document.body.appendChild(f);Music.arp([72,76,79,84]);
+    leaving=false;alive=true;lastT=0;tired=0;pauseUntil=0;document.body.appendChild(f);Music.arp([72,76,79,84]);
     f.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();catchIt();});
     raf=requestAnimationFrame(step);setTimeout(leave,15000+Math.random()*5000);
   };
   const catchIt=()=>{
     if(!alive||leaving)return;
-    sparkle(x,y,22,'#ffe27a');vx=0;vy=0;
+    sparkle(x,y,22,'#ffe27a');vx=0;vy=0;pauseUntil=performance.now()+2600;
     if(typeof FEE_VOICES==='undefined'||!FEE_VOICES.length){say(pick(FLAME_LINES));leave();return;}
     const pre=todayNum<1,st=feeWeekState();
     const notYet=FEE_VOICES.filter(v=>!st.k[v.k]);const v=notYet.length?notYet[Math.floor(Math.random()*notYet.length)]:pick(FEE_VOICES);
@@ -2866,7 +2753,7 @@ function setupFlame(){
       const n=Object.keys(st.k).length;
       if(n===FEE_VOICES.length&&store.get('ate_mel_w',0)!==st.w){store.set('ate_mel_w',st.w);Music.useMelody(true);setTimeout(()=>toast('Mélodie secrète débloquée pour cette semaine ! '+(Music.on?'Écoute.':'Active le son en haut à droite pour l\'écouter.')),1600);}
       else if(n<FEE_VOICES.length)setTimeout(()=>{const t=$('#toast');if(!t||!t.classList.contains('show'))toast('Phrase de la flamme : '+n+' / '+FEE_VOICES.length+' cette semaine.');},1700);}
-    setTimeout(leave,900);
+    setTimeout(leave,2600);
   };
   const luc=typeof lucieOn==='function'&&lucieOn();
   setTimeout(spawn,RM()?30000:(luc?6000:14000));setInterval(spawn,RM()?120000:(luc?35000:60000));
@@ -3528,6 +3415,27 @@ function folkSay(x,y,t){document.querySelectorAll('.folksay').forEach(e=>e.remov
   const r=b.getBoundingClientRect();if(r.right>innerWidth-8)b.style.left=(x-(r.right-innerWidth+8))+'px';if(r.left<8)b.style.left=(x+8-r.left)+'px';
   b.style.setProperty('--d',sayDur(t)+'ms');setTimeout(()=>b.remove(),sayDur(t));}
 
+/* ---- « Le saviez-vous ? » : présente chaque visiteur la première fois ---- */
+const DYK={
+ lucie:{t:'Sainte Lucie',b:'Merci, Lucie !',x:"Le 13 décembre, la Suède fête Lucie, dont le nom vient du latin lux, la lumière. Avant l'aube, une jeune fille en robe blanche, ceinture rouge et couronne de bougies mène un cortège qui chante dans les écoles, les églises et les maisons de retraite. On y partage des brioches au safran. Dans l'ancien calendrier, le 13 décembre était le jour le plus court de l'année."},
+ arie:{t:'Tante Arie',b:'Bonjour, Tante Arie !',x:"Tante Arie est la fée de Noël du pays de Montbéliard, en Franche-Comté. La nuit du 24 décembre, elle passe de maison en maison avec son ânesse Marion, dont on entend les grelots. Elle glisse des friandises, des noix et des biscuits dans les sabots des enfants sages, et un bonnet d'âne aux autres. Dans certains villages, on raconte qu'elle a des dents de fer et des pattes d'oie."},
+ jol:{t:'Le chat de Jól',b:"J'ai un pull neuf, promis",x:"En Islande, le Jólakötturinn, le chat de Noël, rôde dans la neige pendant les fêtes. Il dévore ceux qui n'ont pas reçu de vêtement neuf avant Noël. À l'origine, on menaçait ainsi les gens pour qu'ils finissent de travailler la laine de l'automne : ceux qui avaient bien travaillé recevaient des habits neufs. C'est le chat de Grýla, une ogresse dont les fils sont les pères Noël islandais."}};
+const dykQueue=[];let dykBusy=false;
+function dykArt(k){if(k==='lucie')return LUCIE_SVG.replace('class="lucie"','class="dykart"');if(k==='arie')return ARIE_SVG.replace('class="ariesvg"','class="dykart wide"');return '<div class="dykeyes">'+JOL_SVG.replace('class="jolcat"','class="dykart jol"')+'</div>';}
+function showDYK(k,force){if(!force&&store.get('ate_dyk_'+k,0))return;if(!dykQueue.includes(k))dykQueue.push(k);dykNext();}
+function dykNext(){
+  if(dykBusy||!dykQueue.length)return;
+  if(document.body.classList.contains('ov')||document.body.classList.contains('locked')||document.hidden){setTimeout(dykNext,2500);return;}
+  const k=dykQueue.shift(),D=DYK[k];dykBusy=true;store.set('ate_dyk_'+k,1);
+  const ov=el('div','dyk');ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Le saviez-vous ? '+D.t);
+  const c=el('div','dykcard');c.innerHTML='<div class="dykpic">'+dykArt(k)+'</div>';
+  c.appendChild(txt('span','dyktag','Le saviez-vous ?'));c.appendChild(txt('h2','',D.t));c.appendChild(txt('p','',D.x));
+  const b=txt('button','btn',D.b);b.type='button';c.appendChild(b);ov.appendChild(c);document.body.appendChild(ov);
+  Music.arp([72,76,79]);
+  const close=()=>{ov.classList.add('out');setTimeout(()=>{ov.remove();dykBusy=false;setTimeout(dykNext,600);},300);document.removeEventListener('keydown',esc);};
+  const esc=e=>{if(e.key==='Escape')close();};document.addEventListener('keydown',esc);
+  b.addEventListener('click',close);ov.addEventListener('click',e=>{if(e.target===ov)close();});setTimeout(()=>b.focus(),50);
+}
 function setupFolk(){
   const ground=$('.ground');if(!ground||todayNum<1)return;
   const d=todayNum;
@@ -3535,11 +3443,11 @@ function setupFolk(){
   const lucieCatch=d>16&&d<=20&&!store.get('ate_lucie',0);
   if(lucieOn()||lucieCatch){
     const b=el('button','lucie');b.type='button';b.setAttribute('aria-label','Sainte Lucie, avec sa couronne de bougies');
-    b.innerHTML=LUCIE_SVG.replace('class="lucie"','class="luciesvg"');ground.appendChild(b);store.set('ate_lucie',1);
+    b.innerHTML=LUCIE_SVG.replace('class="lucie"','class="luciesvg"');ground.appendChild(b);store.set('ate_lucie',1);setTimeout(()=>showDYK('lucie'),2200);
     let first=true;
     b.addEventListener('click',()=>{Music.arp([76,79,84]);
       const t=first&&lucieCatch?"Je suis passée le 13, mais tu n'étais pas là ! Alors je reviens, juste un instant.":sayOnce('lucie',LUCIE_LINES);first=false;
-      if(t)bubble(b,ground,t);else{const r=b.getBoundingClientRect();sparkle(r.left+r.width/2,r.top+12,12,'#ffe27a');}});
+      if(t)bubble(b,ground,t);else{const r=b.getBoundingClientRect();sparkle(r.left+r.width/2,r.top+12,12,'#ffe27a');showDYK('lucie',true);}});
     if(lucieCatch)setTimeout(()=>bubble(b,ground,"Je suis passée le 13, mais tu n'étais pas là ! Alors je reviens, juste un instant."),2600);
   }
   /* Tante Arie : traces du 18 au 22, traversées du 21 au 24, la carte le 24 à midi */
@@ -3557,11 +3465,11 @@ function setupFolk(){
       let t=null;if(d===24&&!parked)t=onceLine('arie24',"Reviens à midi : j'aurai glissé quelque chose dans ta chaussette.");
       else if(parked&&tarotPending())t=onceLine('ariecard',"C'est fait ! Regarde dans ta chaussette, la tienne brille.");
       if(!t)t=sayOnce('arie',ARIE_LINES);
-      if(t)bubble(a,ground,t);else{const r=a.getBoundingClientRect();sparkle(r.left+r.width*.38,r.top+r.height*.55,12,'#ffd36a');}});
-    if(parked){a.style.visibility='hidden';ground.appendChild(a);store.set('ate_arie',1);
+      if(t)bubble(a,ground,t);else{const r=a.getBoundingClientRect();sparkle(r.left+r.width*.38,r.top+r.height*.55,12,'#ffd36a');showDYK('arie',true);}});
+    if(parked){a.style.visibility='hidden';ground.appendChild(a);store.set('ate_arie',1);setTimeout(()=>showDYK('arie'),2200);
       const park=()=>parkArie(a,ground);setTimeout(park,1100);addEventListener('resize',()=>{clearTimeout(a._pt);a._pt=setTimeout(park,200);});}
     else{
-      const walk=()=>{if(document.hidden||document.body.classList.contains('ov')||a.isConnected)return;a.classList.remove('go');ground.appendChild(a);void a.offsetWidth;a.classList.add('go');store.set('ate_arie',1);setTimeout(()=>a.remove(),RM()?9000:22000);
+      const walk=()=>{if(document.hidden||document.body.classList.contains('ov')||a.isConnected)return;a.classList.remove('go');ground.appendChild(a);void a.offsetWidth;a.classList.add('go');store.set('ate_arie',1);setTimeout(()=>showDYK('arie'),3000);setTimeout(()=>a.remove(),RM()?9000:22000);
         const done=new Set();const watch=()=>{if(!a.isConnected)return;const r=a.getBoundingClientRect();const cx=r.left+r.width*.3;document.querySelectorAll('#socks .sock').forEach((s,i)=>{if(done.has(i))return;const q=s.getBoundingClientRect();if(Math.abs(q.left+q.width/2-cx)<14){done.add(i);s.classList.remove('wiggle');void s.offsetWidth;s.classList.add('wiggle');setTimeout(()=>s.classList.remove('wiggle'),900);}});requestAnimationFrame(watch);};requestAnimationFrame(watch);};
       setTimeout(walk,4000);if(!arieCatch)setInterval(walk,240000);
     }
@@ -3569,7 +3477,7 @@ function setupFolk(){
   /* le chat de Jól : les yeux du 18 au 22, le chat entier les 23 et 24 */
   if(d>=18&&d<=24){
     const sc=$('.scene');if(!sc)return;
-    const w=el('div','jolwrap'+(d<23?' eyes':''));w.innerHTML=JOL_SVG;sc.insertBefore(w,sc.firstChild);
+    const w=el('div','jolwrap'+(d<23?' eyes':''));w.innerHTML=JOL_SVG;sc.insertBefore(w,sc.firstChild);setTimeout(()=>showDYK('jol'),2600);
     const hit=el('button','jolhit');hit.type='button';hit.tabIndex=-1;hit.setAttribute('aria-label',d<23?'Deux yeux qui brillent dans la nuit':'Le chat de Noël');document.body.appendChild(hit);
     const place=()=>{const es=[...w.querySelectorAll('.jeye')];if(!es.length)return;let l=1e9,t=1e9,r=-1e9,bt=-1e9;es.forEach(e=>{const q=e.getBoundingClientRect();l=Math.min(l,q.left);t=Math.min(t,q.top);r=Math.max(r,q.right);bt=Math.max(bt,q.bottom);});
       const pad=10;hit.style.left=(l-pad)+'px';hit.style.top=(t-pad)+'px';hit.style.width=(r-l+pad*2)+'px';hit.style.height=(bt-t+pad*2)+'px';};
@@ -3577,7 +3485,7 @@ function setupFolk(){
     let met=store.get('ate_jol',0)===1;
     hit.addEventListener('click',e=>{const under=document.elementsFromPoint(e.clientX,e.clientY).map(x=>x!==hit&&x.closest&&x.closest('a,button,input,select,.tile')).find(x=>x&&x!==hit);if(under){under.click();return;}const q=hit.getBoundingClientRect();w.classList.remove('blink');void w.offsetWidth;w.classList.add('blink');
       let t;if(d<23)t=sayOnce('joleyes',JOL_EYES);else{if(!met){t=JOL_INTRO;met=true;store.set('ate_jol',1);}else t=sayOnce('jol',JOL_LINES);Game.catSeen();}
-      if(t)folkSay(q.left+q.width/2,q.bottom+8,t);});
+      if(t)folkSay(q.left+q.width/2,q.bottom+8,t);else showDYK('jol',true);});
   }
 }
 
@@ -3618,11 +3526,13 @@ function openTarot(arrive){
   const cl=txt('button','tclose','×');cl.type='button';cl.setAttribute('aria-label','Fermer');st.appendChild(cl);
   const bar=el('div','tshare');const msg=txt('p','tmsg','Clique sur la carte pour la retourner.');
   const B=(label,fn)=>{const b=txt('button','',label);b.type='button';b.addEventListener('click',e=>{e.stopPropagation();fn(b);});bar.appendChild(b);return b;};
-  const fail=()=>{msg.textContent='Les fichiers de la carte ne sont pas encore en ligne. Réessaie un peu plus tard.';};
+  const fail=()=>{msg.textContent=location.protocol==='file:'?'Le partage et le téléchargement ne marchent que sur le site en ligne (GitHub), avec le dossier « cartes » déposé à côté.':'Les fichiers de la carte ne sont pas encore en ligne. Réessaie un peu plus tard.';};
   let canShareFiles=false;try{canShareFiles=!!(navigator.canShare&&navigator.canShare({files:[new File(['x'],'t.gif',{type:'image/gif'})]}));}catch(e){}
   if(canShareFiles)B('Partager',()=>{msg.textContent='Préparation…';tarotFile('gif').then(bl=>navigator.share({files:[new File([bl],'carte-'+tslug(me)+'.gif',{type:'image/gif'})],title:'Ma carte de la Table',text:'Ma carte de la Table · Noël 2026'})).then(()=>{msg.textContent='Partagée !';}).catch(e=>{if(e&&e.name==='AbortError')msg.textContent='';else fail();});});
   if(navigator.clipboard&&window.ClipboardItem)B("Copier l'image",()=>{msg.textContent='Copie…';navigator.clipboard.write([new ClipboardItem({'image/png':tarotFile('png')})]).then(()=>{msg.textContent="Image copiée ! Colle-la dans Mattermost avec Ctrl+V (Cmd+V sur Mac).";}).catch(fail);});
-  const dl=(ext,label)=>{const a=el('a','');a.href=TAROT_DIR+tslug(me)+'.'+ext;a.download='carte-de-la-table-'+tslug(me)+'.'+ext;a.textContent=label;a.addEventListener('click',e=>{e.stopPropagation();fetch(a.href,{method:'HEAD'}).then(r=>{if(!r.ok)fail();else msg.textContent=ext==='gif'?"Animation téléchargée : glisse le fichier dans Mattermost pour la partager.":'Image téléchargée.';}).catch(()=>{});});bar.appendChild(a);};
+  const dl=(ext,label)=>{const a=el('a','');a.href=TAROT_DIR+tslug(me)+'.'+ext;a.textContent=label;a.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();msg.textContent='Téléchargement…';
+    tarotFile(ext).then(bl=>{const u=URL.createObjectURL(bl);const t=el('a','');t.href=u;t.download='carte-de-la-table-'+tslug(me)+'.'+ext;document.body.appendChild(t);t.click();t.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);
+      msg.textContent=ext==='gif'?"Animation téléchargée : glisse le fichier dans Mattermost pour la partager.":'Image téléchargée.';}).catch(fail);});bar.appendChild(a);};
   dl('png',"Télécharger l'image");dl('gif',"Télécharger l'animation");
   const foot=el('div','tfoot');foot.appendChild(bar);foot.appendChild(msg);st.appendChild(foot);
   // inclinaison
